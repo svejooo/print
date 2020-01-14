@@ -1,0 +1,34 @@
+<?php
+
+
+namespace shop\services;
+
+
+use shop\entities\Shop\Tag;
+use shop\forms\shop\TagForm;
+use shop\repositories\TagRepository;
+
+class TagManageService
+{
+    private $tags;
+
+    public function __construct(TagRepository $tags)
+    {
+        $this->tags = $tags ;
+    }
+
+    public function create(TagForm $form): Tag
+    {
+        $tag = Tag::create($form->name, $form->slug);
+        $this->tags->save($tag);
+        return $tag;
+    }
+
+    public function remove($id): void
+    {
+        $tag = $this->tags->get($id);
+        $this->tags->remove($tag);
+    }
+
+
+}
