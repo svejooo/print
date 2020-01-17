@@ -42,6 +42,7 @@ class ComposerStaticInite50bb6a871eec6376e517505596b987f
         'p' => 
         array (
             'phpDocumentor\\Reflection\\' => 25,
+            'paulzi\\nestedsets\\' => 18,
         ),
         'l' => 
         array (
@@ -168,6 +169,10 @@ class ComposerStaticInite50bb6a871eec6376e517505596b987f
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
             1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
             2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+        ),
+        'paulzi\\nestedsets\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/paulzi/yii2-nested-sets',
         ),
         'lhs\\Yii2SaveRelationsBehavior\\' => 
         array (

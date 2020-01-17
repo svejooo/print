@@ -1,7 +1,7 @@
 <?php
 
 
-namespace shop\entities\Shop;
+namespace shop\entities\shop;
 
 use yii\db\ActiveRecord;
 

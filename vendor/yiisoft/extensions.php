@@ -120,4 +120,13 @@ return array (
       '@kartik/field' => $vendorDir . '/kartik-v/yii2-field-range/src',
     ),
   ),
+  'paulzi/yii2-nested-sets' => 
+  array (
+    'name' => 'paulzi/yii2-nested-sets',
+    'version' => '1.1.0.0',
+    'alias' => 
+    array (
+      '@paulzi/nestedsets' => $vendorDir . '/paulzi/yii2-nested-sets',
+    ),
+  ),
 );

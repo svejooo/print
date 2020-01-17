@@ -1,7 +1,8 @@
 <?php
 namespace shop\repositories;
 
-use shop\entities\Shop\Tag;
+use shop\entities\shop\Tag;
+
 
 
 

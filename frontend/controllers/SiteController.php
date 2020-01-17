@@ -5,9 +5,9 @@ namespace frontend\controllers;
 
 use frontend\services\contact\ContactService;
 
-//  use Shop\services\auth\AuthService;
-//use Shop\forms\LoginForm;
-//use Shop\entities\User;
+//  use shop\services\auth\AuthService;
+//use shop\forms\LoginForm;
+//use shop\entities\User;
 
 use Yii;
 use yii\base\InvalidArgumentException;

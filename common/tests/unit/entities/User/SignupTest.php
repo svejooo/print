@@ -1,5 +1,5 @@
 <?php
-//namespace Shop\tests\unit\entities\User;
+//namespace shop\tests\unit\entities\User;
 namespace common\tests\unit\entities\User;
 use Codeception\Test\Unit;
 use common\entities\User;
