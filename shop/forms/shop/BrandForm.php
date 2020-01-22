@@ -1,24 +1,23 @@
 <?php
-
-
 namespace shop\forms\shop;
 
 
-//use shop\entities\Shop\Brand;
-//use shop\forms\CompositeForm;
-//use shop\forms\manage\MetaForm;
-//use shop\validators\SlugValidator;
 use shop\entities\shop\Brand;
+use shop\forms\CompositeForm;
 use shop\validators\SlugValidator;
 use yii\base\Model;
+use shop\forms\MetaForm;
 
 /**
  * @property MetaForm $meta;
  */
-class BrandForm extends Model
+
+class BrandForm extends CompositeForm
 {
+    public $id;
     public $name;
     public $slug;
+   // public $meta;
 
     private $_brand;
 
@@ -29,7 +28,8 @@ class BrandForm extends Model
             $this->slug = $brand->slug;
             $this->meta = new MetaForm($brand->meta);
             $this->_brand = $brand;
-        } else {
+        }
+        else {
             $this->meta = new MetaForm();
         }
         parent::__construct($config);

@@ -36,6 +36,21 @@
                    // ['label' => 'Юзеры', 'icon' => 'user', 'url' => ['/user'], 'active' => $this->context->id == 'user' ],
                     ['label' => 'Юзеры', 'icon' => 'user', 'url' => ['/user'], 'active' => Yii::$app->controller->id == 'user'],
                     ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
+
+                    [
+                        'label' => 'Продукция',
+                        'icon' => 'share',
+                        'url' => '#',
+                        'items' => [
+                            [
+                                'label' => 'Продукция', 'icon' => 'file-code-o', 'url' => ['/gii'],
+                            ],
+                            [
+                                'label' => 'Брэнды', 'icon' => 'dashboard', 'url' => ['/shop/brand/index'],
+                            ],
+                        ],
+                    ],
+
                     [
                         'label' => 'Тулзы',
                         'icon' => 'share',

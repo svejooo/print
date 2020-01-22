@@ -2,18 +2,33 @@
 
 namespace backend\controllers\shop;
 
+//use shop\useCases\manage\Shop\BrandManageService;
+use shop\forms\shop\BrandForm;
 use Yii;
 use shop\entities\shop\Brand;
 use backend\forms\Shop\BrandSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use shop\services\manage\Shop\BrandManageService;
+use shop\repositories\NotFoundException;
+
 
 /**
  * BrandController implements the CRUD actions for Brand model.
  */
 class BrandController extends Controller
 {
+    //public $service;
+    private $manageService;
+
+    public function __construct($id, $module, BrandManageService $service, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->manageService = $service;
+    }
+
+
     /**
      * {@inheritdoc}
      */
@@ -44,6 +59,8 @@ class BrandController extends Controller
         ]);
     }
 
+
+
     /**
      * Displays a single Brand model.
      * @param integer $id
@@ -64,16 +81,23 @@ class BrandController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Brand();
+        $form = new BrandForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $brand = $this->manageService->create($form);
+                return $this->redirect(['view', 'id' => $brand->id]);
+            } catch (\DomainException $e){
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
 
         return $this->render('create', [
-            'model' => $model,
+            'model' => $form,
         ]);
     }
+
 
     /**
      * Updates an existing Brand model.
@@ -82,18 +106,42 @@ class BrandController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
+//    public function actionUpdate($id)
+//    {
+//        $model = $this->findModel($id);
+//
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->id]);
+//        }
+//        return $this->render('update', [
+//            'model' => $model,
+//        ]);
+//    }
+
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        //Yii::$app->cache->flush();
+        $brand = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $form = new BrandForm($brand);
+
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->manageService->edit($brand->id, $form);
+                return $this->redirect(['view', 'id' => $brand->id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
-
         return $this->render('update', [
-            'model' => $model,
+            'model' => $form,
+            'brand' => $brand,
         ]);
     }
+
+
+
 
     /**
      * Deletes an existing Brand model.

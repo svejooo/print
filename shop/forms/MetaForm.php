@@ -1,7 +1,7 @@
 <?php
 
 
-namespace shop\forms\shop;
+namespace shop\forms;
 
 
 use shop\entities\Meta;

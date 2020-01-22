@@ -28,9 +28,11 @@ class BrandManageService
                 $form->meta->keywords
             )
         );
+
         $this->brands->save($brand);
         return $brand;
     }
+
 
     public function edit($id, BrandForm $form): void
     {
