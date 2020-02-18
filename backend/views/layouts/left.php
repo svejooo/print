@@ -43,10 +43,13 @@
                         'url' => '#',
                         'items' => [
                             [
-                                'label' => 'Продукция', 'icon' => 'file-code-o', 'url' => ['/gii'],
+                                'label' => 'Категории', 'icon' => 'file-code-o', 'url' => ['/shop/category/index'],
                             ],
                             [
                                 'label' => 'Брэнды', 'icon' => 'dashboard', 'url' => ['/shop/brand/index'],
+                            ],
+                            [
+                                'label' => 'Характиристики', 'icon' => 'dashboard', 'url' => ['/shop/characteristics/'],
                             ],
                         ],
                     ],

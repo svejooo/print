@@ -1,14 +1,12 @@
 <?php
 
-
 namespace shop\forms\shop;
-
-
 
 use shop\entities\Shop\Category;
 //use shop\forms\CompositeForm;
 
-use shop\forms\shop\MetaForm;
+use shop\forms\CompositeForm;
+use shop\forms\MetaForm;
 use shop\validators\SlugValidator;
 
 use yii\base\Model;
@@ -18,7 +16,7 @@ use yii\helpers\ArrayHelper;
  * @property MetaForm $meta;
  */
 //class CategoryForm extends CompositeForm
-class CategoryForm extends Model
+class CategoryForm extends CompositeForm
 {
     public $name;
     public $slug;
@@ -26,17 +24,30 @@ class CategoryForm extends Model
     public $description;
     public $parentId;
 
+//    public $meta;
+//    public $meta_json;
+//    public $lft;
+//    public $rgt;
+//    public $depth;
+
     private $_category;
 
     public function __construct(Category $category = null, $config = [])
     {
+
         if ($category) {
             $this->name = $category->name;
             $this->slug = $category->slug;
             $this->title = $category->title;
+
             $this->description = $category->description;
             $this->parentId = $category->parent ? $category->parent->id : null;
+
             $this->meta = new MetaForm($category->meta);
+
+            //var_dump($this->meta);
+            //var_dump($category);
+            //exit;
             $this->_category = $category;
         } else {
             $this->meta = new MetaForm();

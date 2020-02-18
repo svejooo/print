@@ -9,6 +9,7 @@ use yii\base\Model;
 
 class MetaForm extends Model
 {
+
     public $title;
     public $description;
     public $keywords;

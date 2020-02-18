@@ -27,6 +27,8 @@ class CategoryRepository
         return $category;
     }
 
+
+
     public function save(Category $category): void
     {
         if (!$category->save()) {
@@ -34,6 +36,8 @@ class CategoryRepository
         }
         //$this->dispatcher->dispatch(new EntityPersisted($category));
     }
+
+
 
     public function remove(Category $category): void
     {

@@ -75,6 +75,7 @@ class Category extends ActiveRecord
         ];
     }
 
+    // Транзакция
     public function transactions(): array
     {
         return [
@@ -84,6 +85,7 @@ class Category extends ActiveRecord
 
     public static function find(): CategoryQuery
     {
+        // Переопределеям
         return new CategoryQuery(static::class);
     }
 }
