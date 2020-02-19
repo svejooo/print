@@ -1,6 +1,7 @@
 <?php
 
 use shop\entities\shop\Category;
+use shop\forms\shop\CategoryForm;
 use yii\grid\ActionColumn;
 use yii\helpers\Html;
 use yii\grid\GridView;
@@ -11,6 +12,7 @@ use yii\grid\GridView;
 
 $this->title = 'Категории';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="category-index">
 
@@ -24,23 +26,45 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
+        'emptyCell' => '',
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
-            'id',
+
             [
-                'attribute' => 'name',
-                'value' => function (Category $model) {
-                    $indent = ($model->depth > 1 ? str_repeat('&nbsp;&nbsp;', $model->depth - 1) . ' ' : '');
-                    return $indent . Html::a(Html::encode($model->name), ['view', 'id' => $model->id]);
+                'value'=> function ($data){
+                    return
+                        Html::a('<span class="glyphicon glyphicon-arrow-down"> </span>', ['move-down', 'id'=>$data->id] ,['data-method' => 'post']).
+                        Html::a('<span class="glyphicon glyphicon-arrow-up"></span>', ['move-up', 'id'=>$data->id] ,['data-method' => 'post']);
                 },
-                'format' => 'raw',
+                'format'=>'raw',
+                'headerOptions' => ['width' => '50'],
             ],
+            [
+                'attribute' => 'id',
+                'headerOptions' => ['width' => '40'],
+            ],
+            [
+                'attribute'=>'name',
+                'contentOptions' => ['class' => 'table_class','style'=>'display:block;'],
+                'content' => function($data){
+                           $res = ($data->depth > 1 ? str_repeat('-&nbsp;', $data->depth - 1) . '' : '');
+                           $name = ($data->depth > 1 ? $data->name : '<strong>'.$data->name.'</strong>');
+                    return $res . $name;
+                },
+            ],
+
+
 
             'slug',
             'title',
             'description:ntext',
-
-            ['class' => ActionColumn::class],
+            [
+                'class' => 'yii\grid\ActionColumn',
+                'header'=>'Действия',
+                'headerOptions' => ['width' => '80'],
+                'template' => '{view} &nbsp {update} &nbsp {delete}{link}',
+            ],
+           // ['class' => ActionColumn::class],
         ],
     ]); ?>
     </div>

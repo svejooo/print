@@ -19,6 +19,9 @@ class CategoryManageService
         $this->categories = $categories;
     }
 
+
+
+
     public function create(CategoryForm $form): Category
     {
         $parent = $this->categories->get($form->parentId);
@@ -80,11 +83,35 @@ class CategoryManageService
         $this->categories->remove($category);
     }
 
+    // Проверка, не родительская ли категория
     private function assertIsNotRoot(Category $category): void
     {
         if ($category->isRoot()) {
-            throw new \DomainException('Unable to manage the root category.');
+            throw new \DomainException('Ты чо! Это корневая директория');
         }
     }
+
+    ###############################
+
+    public function  moveUp($id):void
+    {
+        $category = $this->categories->get($id);
+        $this->assertIsNotRoot($category);
+        if ($prev = $category->prev){
+            $category->insertBefore($prev);
+        }
+        $this->categories->save($category);
+    }
+
+    public function  moveDown($id):void
+    {
+        $category = $this->categories->get($id);
+        $this->assertIsNotRoot($category);
+        if ($prev = $category->next){
+            $category->insertAfter($prev);
+        }
+        $this->categories->save($category);
+    }
+
 
 }

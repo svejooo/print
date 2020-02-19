@@ -2,7 +2,8 @@
 
 namespace shop\entities\shop;
 
-use Yii;
+use yii\db\ActiveRecord;
+use yii\helpers\Json;
 
 /**
  * This is the model class for table "shop_characteristics".
@@ -15,8 +16,50 @@ use Yii;
  * @property array $variants_json
  * @property int $sort
  */
-class Characteristics extends \yii\db\ActiveRecord
+class Characteristics extends ActiveRecord
 {
+
+    const TYPE_STRING  = 'string';
+    const TYPE_INTEGER = 'integer';
+    const TYPE_FLOAT   = 'float';
+
+    public $variants;
+
+    public static function create($name, $type, $required, $default, array $variants_json, $sort): self
+    {
+        $object = new static();
+        $object->name = $name;
+        $object->type = $type;
+        $object->required = $required;
+        $object->default = $default;
+        $object->variants = $variants_json;
+        $object->sort = $sort;
+        return $object;
+    }
+
+    public function edit($name, $type, $required, $default, array $variants_json, $sort): void
+    {
+        $this->name = $name;
+        $this->type = $type;
+        $this->required = $required;
+        $this->default = $default;
+        $this->variants = $variants_json;
+        $this->sort = $sort;
+    }
+
+    // Приходит в джейсоне, поэтому нада перегонять
+    public function afterFind(): void
+    {
+        $this->variants = Json::decode($this->getAttribute('variants_json'));
+        parent::afterFind();
+    }
+
+    public function beforeSave($insert): bool
+    {
+        $this->setAttribute('variants_json', Json::encode($this->variants));
+        return parent::beforeSave($insert);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -28,7 +71,8 @@ class Characteristics extends \yii\db\ActiveRecord
     /**
      * {@inheritdoc}
      */
-    public function rules()
+    // Это переписываем в CharacteristicForm
+    public function _______rules()
     {
         return [
             [['name', 'type', 'required', 'variants_json', 'sort'], 'required'],
@@ -46,12 +90,34 @@ class Characteristics extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
-            'type' => 'Type',
+            'name' => 'Название',
+            'type' => 'Тип',
             'required' => 'Required',
-            'default' => 'Default',
+            'default' => 'По умолчанию',
             'variants_json' => 'Variants Json',
             'sort' => 'Sort',
         ];
+    }
+
+    ######################################
+    // Вспомогательные методы
+    public function isString(): bool
+    {
+        return $this->type === self::TYPE_STRING;
+    }
+
+    public function isInteger(): bool
+    {
+        return $this->type === self::TYPE_INTEGER;
+    }
+
+    public function isFloat(): bool
+    {
+        return $this->type === self::TYPE_FLOAT;
+    }
+
+    public function isSelect(): bool
+    {
+        return count($this->variants) > 0;
     }
 }

@@ -52,7 +52,7 @@ class CategoryController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new  CategorySearch();
+        $searchModel = new CategorySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -160,5 +160,18 @@ class CategoryController extends Controller
         throw new NotFoundHttpException('Запрашиваемая стр не нашлась...');
     }
 
+
+    ###############################
+    public function actionMoveUp($id)
+    {
+        $this->manageService->moveUp($id);
+        return $this->redirect(['index']);
+    }
+
+    public function actionMoveDown($id)
+    {
+        $this->manageService->moveDown($id);
+        return $this->redirect(['index']);
+    }
 
 }
