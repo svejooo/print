@@ -79,7 +79,7 @@ class Product extends ActiveRecord
 
 
 
-    // Categories
+    // Categories  -------------------------------------------------
     // Меняем главную категорию, через промежуточную таблицу и класс
     public function changeMainCategory($categoryId): void
     {
@@ -116,50 +116,18 @@ class Product extends ActiveRecord
     {
         $this->categoryAssignments = [];
     }
+    // end Categories ------------------------------------------
 
 
 
-
-    // Tags
-
-    public function assignTag($id): void
-    {
-        $assignments = $this->tagAssignments;
-        foreach ($assignments as $assignment) {
-            if ($assignment->isForTag($id)) {
-                return;
-            }
-        }
-        $assignments[] = TagAssignment::create($id);
-        $this->tagAssignments = $assignments;
-    }
-
-    public function revokeTag($id): void
-    {
-        $assignments = $this->tagAssignments;
-        foreach ($assignments as $i => $assignment) {
-            if ($assignment->isForTag($id)) {
-                unset($assignments[$i]);
-                $this->tagAssignments = $assignments;
-                return;
-            }
-        }
-        throw new \DomainException('Assignment is not found.');
-    }
-
-    public function revokeTags(): void
-    {
-        $this->tagAssignments = [];
-    }
-
-    // Photos
-
+    // Photos --------------------------------------------------
     public function addPhoto(UploadedFile $file): void
     {
         $photos = $this->photos;
         $photos[] = Photo::create($file);
         $this->updatePhotos($photos);
     }
+
 
     public function removePhoto($id): void
     {
@@ -178,6 +146,7 @@ class Product extends ActiveRecord
     {
         $this->updatePhotos([]);
     }
+
 
     public function movePhotoUp($id): void
     {
@@ -218,9 +187,47 @@ class Product extends ActiveRecord
         }
         $this->photos = $photos;
     }
+    // end Photos --------------------------------------------------
 
-    // Related products
 
+
+
+
+    // Tags  ---------------------------------------------------
+    public function assignTag($id): void
+    {
+        $assignments = $this->tagAssignments;
+        foreach ($assignments as $assignment) {
+            if ($assignment->isForTag($id)) {
+                return;
+            }
+        }
+        $assignments[] = TagAssignment::create($id);
+        $this->tagAssignments = $assignments;
+    }
+
+    public function revokeTag($id): void
+    {
+        $assignments = $this->tagAssignments;
+        foreach ($assignments as $i => $assignment) {
+            if ($assignment->isForTag($id)) {
+                unset($assignments[$i]);
+                $this->tagAssignments = $assignments;
+                return;
+            }
+        }
+        throw new \DomainException('Assignment is not found.');
+    }
+
+    public function revokeTags(): void
+    {
+        $this->tagAssignments = [];
+    }
+    // end Tags -------------------------------------
+
+
+
+    // Related products -----------------------------
     public function assignRelatedProduct($id): void
     {
         $assignments = $this->relatedAssignments;
