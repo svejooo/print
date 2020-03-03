@@ -7,6 +7,8 @@ namespace shop\services\manage\Shop;
 use shop\entities\Meta;
 use shop\entities\shop\Product\Product;
 use shop\entities\shop\Tag;
+use shop\forms\shop\Product\PhotosForm;
+use shop\forms\shop\Product\PriceForm;
 use shop\forms\shop\Product\ProductCreateForm;
 use shop\forms\shop\Product\ProductEditForm;
 use shop\repositories\Shop\BrandRepository;
@@ -145,6 +147,51 @@ class ProductManageService
             $this->products->save($product);
         });
     }
+
+
+
+    public function changePrice($id, PriceForm $form): void
+    {
+        $product = $this->products->get($id);
+        $product->setPrice($form->new, $form->old);
+        $this->products->save($product);
+    }
+
+
+    # --------------------PHOTO ---------------------------- #
+
+    public function addPhotos($id, PhotosForm $form): void
+    {
+        $product = $this->products->get($id);
+        foreach ($form->files as $file) {
+            $product->addPhoto($file);
+        }
+        $this->products->save($product);
+    }
+
+    public function movePhotoUp($id, $photoId): void
+    {
+        $product = $this->products->get($id);
+        $product->movePhotoUp($photoId);
+        $this->products->save($product);
+    }
+
+    public function movePhotoDown($id, $photoId): void
+    {
+        $product = $this->products->get($id);
+        $product->movePhotoDown($photoId);
+        $this->products->save($product);
+    }
+
+    public function removePhoto($id, $photoId): void
+    {
+        $product = $this->products->get($id);
+        $product->removePhoto($photoId);
+        $this->products->save($product);
+    }
+
+    # -------------------- end PHOTO ---------------------------- #
+
 
 
 
