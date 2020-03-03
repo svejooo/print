@@ -14,6 +14,8 @@ use yii\db\ActiveRecord;
  * @property integer $created_at
  * @property string $code
  * @property string $name
+ *
+ *  * @property string $description
  * @property integer $category_id
  * @property integer $brand_id
  * @property integer $price_old
@@ -55,13 +57,16 @@ class Product extends ActiveRecord
         $this->price_old = $old;
     }
 
-    public function edit($brandId, $code, $name, Meta $meta): void
+    public function edit($brandId, $code, $name, $description, Meta $meta): void
     {
         $this->brand_id = $brandId;
         $this->code = $code;
         $this->name = $name;
+        $this->description = $description;
         $this->meta = $meta;
     }
+
+
     public function setValue($id, $value): void
     {
         $values = $this->values;
@@ -74,6 +79,17 @@ class Product extends ActiveRecord
         }
         $values[] = Value::create($id, $value);
         $this->values = $values;
+    }
+
+    public function getValue($id): Value
+    {
+        $values = $this->values;
+        foreach ($values as $val) {
+            if ($val->isForCharacteristic($id)) {
+                return $val;
+            }
+        }
+        return Value::blank($id);
     }
 
 
