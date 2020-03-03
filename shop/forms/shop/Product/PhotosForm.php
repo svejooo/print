@@ -17,7 +17,8 @@ class PhotosForm extends Model
     public function rules(): array
     {
         return [
-            ['files', 'each', 'rule' => ['image']],
+            ['files', 'each', 'rule' => ['image']],  // Валидируем массив с картинками
+            ['files',  'image'],  // Валидация - Если принимаем одну картинку
         ];
     }
 

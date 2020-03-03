@@ -3,11 +3,19 @@
 
 namespace shop\forms\shop\Product;
 
-
 use shop\entities\shop\Characteristics;
 use shop\entities\shop\Product\Product;
 use shop\forms\CompositeForm;
 use shop\forms\MetaForm;
+
+/**
+ * @property PriceForm $price
+ * @property MetaForm $meta
+ * @property CategoriesForm $categories
+ * @property PhotosForm $photos
+ * @property TagsForm $tags
+ * @property ValueForm[] $values
+ */
 
 class ProductCreateForm extends CompositeForm
 {
@@ -15,7 +23,9 @@ class ProductCreateForm extends CompositeForm
     public $code;
     public $name;
 
-      // В конструкторе обрабаатываем все мелкие формы
+    // В конструкторе обрабаатываем все мелкие формы
+
+
     public function __construct($config = [])
     {
         $this->price = new PriceForm();
@@ -28,6 +38,8 @@ class ProductCreateForm extends CompositeForm
         }, Characteristics::find()->orderBy('sort')->all());
         parent::__construct($config);
     }
+
+
 
     public function rules(): array
     {

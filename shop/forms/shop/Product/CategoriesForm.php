@@ -28,7 +28,7 @@ class CategoriesForm extends Model
             ['main', 'required'],
             ['main', 'integer'],
             ['others', 'each', 'rule' => ['integer']],
-            ['others', 'default', 'value' => []],
+            //['others', 'default', 'value' => []],
         ];
     }
 }

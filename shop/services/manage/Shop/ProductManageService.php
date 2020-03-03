@@ -4,10 +4,12 @@
 namespace shop\services\manage\Shop;
 
 
+use shop\entities\Meta;
 use shop\entities\shop\Product\Product;
 use shop\forms\shop\Product\ProductCreateForm;
 use shop\repositories\Shop\BrandRepository;
 use shop\repositories\Shop\CategoryRepository;
+use shop\repositories\Shop\ProductRepository;
 use shop\repositories\TagRepository;
 
 class ProductManageService
@@ -51,14 +53,15 @@ class ProductManageService
             )
         );
 
-        $product->setPrice($form->price->new, $form->price->old);
 
+        $product->setPrice($form->price->new, $form->price->old);
 
         // Ходит по другим категориям и привязвает походу...
         foreach ($form->categories->others as $otherId) {
             $category = $this->categories->get($otherId);
             $product->assignCategory($category->id);
         }
+
 
         foreach ($form->values as $value) {
             $product->setValue($value->id, $value->value);

@@ -35,6 +35,7 @@ class TagsForm extends Model
 
     public function getNewNames(): array
     {
-        return array_filter(array_map('trim', preg_split('#\s*,\s*#i', $this->textNew)));
+        //return array_filter(array_map('trim', preg_split('#\s*,\s*#i', $this->textNew)));
+        return  array_map('trim', preg_split('#\s*,\s*#i', $this->textNew)) ;
     }
 }
