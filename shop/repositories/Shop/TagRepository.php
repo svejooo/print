@@ -1,14 +1,9 @@
 <?php
 namespace shop\repositories;
-
 use shop\entities\shop\Tag;
-
-
-
 
 class TagRepository
 {
-
     public function get($id): Tag
     {
         if (!$tag = Tag::findOne($id)) {
@@ -18,12 +13,10 @@ class TagRepository
         return $tag;
     }
 
-
     public function findByName($name): ?Tag
     {
         return Tag::findOne(['name' => $name]);
     }
-
 
     public function save(Tag $tag): void
     {

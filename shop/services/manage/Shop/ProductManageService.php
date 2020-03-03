@@ -66,22 +66,23 @@ class ProductManageService
             $category = $this->categories->get($otherId);
             $product->assignCategory($category->id);
         }
-
-
         foreach ($form->values as $value) {
             $product->setValue($value->id, $value->value);
         }
-
         foreach ($form->photos->files as $file) {
             $product->addPhoto($file);
         }
-
         foreach ($form->tags->existing as $tagId) {
             $tag = $this->tags->get($tagId);
             $product->assignTag($tag->id);
         }
 
+        // Оборачиваем в транзакцию. Но отсюда с базой работать не будем а сделаем отдельный класс
+        // Пишем класс который буедт управлять транзакциями
+        // Все что внутри - выполнгиться в одной транзакции
+        // Используем use для  появления внешних переменных внутри ананимной функции
         $this->transaction->wrap(function () use ($product, $form) {
+
             foreach ($form->tags->newNames as $tagName) {
                 if (!$tag = $this->tags->findByName($tagName)) {
                     $tag = Tag::create($tagName, $tagName);
@@ -89,8 +90,10 @@ class ProductManageService
                 }
                 $product->assignTag($tag->id);
             }
+
             $this->products->save($product);
         });
+
 
         return $product;
     }
@@ -117,20 +120,21 @@ class ProductManageService
         );
 
         $product->changeMainCategory($category->id);
-
+        //Удаляем предыдущие категории
         $product->revokeCategories();
-
+        // И присваеиваем новые
         foreach ($form->categories->others as $otherId) {
             $category = $this->categories->get($otherId);
             $product->assignCategory($category->id);
         }
-
+        // Проставляем новые значения  атрибутов
         foreach ($form->values as $value) {
             $product->setValue($value->id, $value->value);
         }
 
+        // Удаляенм предыдыщие теги
         $product->revokeTags();
-
+        // И добавляем новые
         foreach ($form->tags->existing as $tagId) {
             $tag = $this->tags->get($tagId);
             $product->assignTag($tag->id);
@@ -159,7 +163,7 @@ class ProductManageService
 
 
     # --------------------PHOTO ---------------------------- #
-
+    //  Сэйв релэйшн бихэвиор оборачивает всею эту хуйню в транзакции
     public function addPhotos($id, PhotosForm $form): void
     {
         $product = $this->products->get($id);

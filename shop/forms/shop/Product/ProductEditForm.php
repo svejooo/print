@@ -26,6 +26,8 @@ class ProductEditForm extends CompositeForm
 
     private $_product;
 
+    // Нужно получить данные и заполнить форму в отличие от CreateProductForm
+    // Gevalue как раз извлекает текущие значения характеристик
     public function __construct(Product $product, $config = [])
     {
         $this->brandId = $product->brand_id;
