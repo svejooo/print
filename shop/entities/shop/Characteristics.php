@@ -22,6 +22,7 @@ class Characteristics extends ActiveRecord
     const TYPE_STRING  = 'string';
     const TYPE_INTEGER = 'integer';
     const TYPE_FLOAT   = 'float';
+    const BOOLEAN   = 'bool';
 
     public $variants;
 

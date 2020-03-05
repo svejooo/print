@@ -2,6 +2,8 @@
 
 namespace backend\controllers\shop;
 
+use shop\forms\shop\CharacteristicForm;
+use shop\services\manage\Shop\CharacteristicsManageService;
 use Yii;
 use shop\entities\shop\Characteristics;
 use backend\forms\Shop\CharacteristicsSearch;
@@ -14,10 +16,18 @@ use yii\filters\VerbFilter;
  */
 class CharacteristicsController extends Controller
 {
-    /**
-     * {@inheritdoc}
-     */
-    public function behaviors()
+
+    private $service;
+
+    public function __construct($id, $module, CharacteristicsManageService $service, $config = [])
+    {
+        parent::__construct($id, $module, $config);
+        $this->service = $service;
+    }
+
+
+
+    public function behaviors(): array
     {
         return [
             'verbs' => [
@@ -28,6 +38,7 @@ class CharacteristicsController extends Controller
             ],
         ];
     }
+
 
     /**
      * Lists all Characteristics models.
@@ -57,43 +68,67 @@ class CharacteristicsController extends Controller
         ]);
     }
 
-    /**
-     * Creates a new Characteristics model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
-     */
-    public function actionCreate()
-    {
-        $model = new Characteristics();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+    /**
+    Переделываем экшн
+     */
+//    public function actionCreate()
+//    {
+//        $model = new Characteristics();
+//
+//        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//            return $this->redirect(['view', 'id' => $model->id]);
+//        }
+//
+//        return $this->1render('create', [
+//            'model' => $model,
+//        ]);
+//    }
+
+        public function actionCreate()
+        {
+            $form = new CharacteristicForm();
+            if( $form->load( Yii::$app->request->post())  && $form->validate()){
+                try {
+                    $char_s = $this->service->create($form);
+                    return $this->redirect([ 'view', 'id'=> $char_s->id ]);
+                } catch (\DomainException $e){
+                    Yii::$app->errorHandler->logException($e);
+                    Yii::$app->session->setFlash('error', $e->getMessage());
+                }
+            }
+
+            return $this->render('create', ['model' => $form]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-        ]);
-    }
 
-    /**
-     * Updates an existing Characteristics model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
+
+
     public function actionUpdate($id)
     {
-        $model = $this->findModel($id);
+        $characteristic = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+        $form = new CharacteristicForm($characteristic);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->service->edit($characteristic->id, $form);
+                return $this->redirect(['view', 'id' => $characteristic->id]);
+
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
         }
-
         return $this->render('update', [
-            'model' => $model,
+            'model' => $form,
+            'characteristic' => $characteristic,
         ]);
     }
+
+
+
+
 
     /**
      * Deletes an existing Characteristics model.
