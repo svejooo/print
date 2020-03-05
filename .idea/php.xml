@@ -90,6 +90,8 @@
       <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-helpers" />
       <path value="$PROJECT_DIR$/vendor/kartik-v/yii2-field-range" />
       <path value="$PROJECT_DIR$/vendor/paulzi/yii2-nested-sets" />
+      <path value="$PROJECT_DIR$/vendor/masterexploder/phpthumb" />
+      <path value="$PROJECT_DIR$/vendor/yii-dream-team/yii2-upload-behavior" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />

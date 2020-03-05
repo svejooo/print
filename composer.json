@@ -25,7 +25,8 @@
         "kartik-v/yii2-widget-datetimepicker": "^1.4",
         "kartik-v/yii2-widget-datepicker": "^1.4",
         "kartik-v/yii2-field-range": "*",
-        "paulzi/yii2-nested-sets": "^1.1"
+        "paulzi/yii2-nested-sets": "^1.1",
+        "yii-dream-team/yii2-upload-behavior": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

@@ -129,4 +129,13 @@ return array (
       '@paulzi/nestedsets' => $vendorDir . '/paulzi/yii2-nested-sets',
     ),
   ),
+  'yii-dream-team/yii2-upload-behavior' => 
+  array (
+    'name' => 'yii-dream-team/yii2-upload-behavior',
+    'version' => '1.2.3.0',
+    'alias' => 
+    array (
+      '@yiidreamteam/upload' => $vendorDir . '/yii-dream-team/yii2-upload-behavior/src',
+    ),
+  ),
 );
