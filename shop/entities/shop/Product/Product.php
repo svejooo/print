@@ -8,6 +8,7 @@ use shop\entities\shop\Brand;
 use shop\entities\shop\Category;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
+use yii\web\UploadedFile;
 
 /**
  * @property integer $id
