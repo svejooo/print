@@ -1,12 +1,13 @@
 <?php
 
 
-namespace shop\services;
+namespace shop\services\manage\Shop;
 
 
 use shop\entities\Shop\Tag;
 use shop\forms\shop\TagForm;
-use shop\repositories\TagRepository;
+use shop\repositories\Shop\TagRepository;
+
 
 class TagManageService
 {
@@ -19,10 +20,23 @@ class TagManageService
 
     public function create(TagForm $form): Tag
     {
+
         $tag = Tag::create($form->name, $form->slug);
         $this->tags->save($tag);
         return $tag;
+
     }
+
+    public function edit($id, TagForm $form): void
+    {
+        $tag = $this->tags->get($id);
+        $tag->edit(
+            $form->name,
+            $form->slug
+        );
+        $this->tags->save($tag);
+    }
+
 
     public function remove($id): void
     {

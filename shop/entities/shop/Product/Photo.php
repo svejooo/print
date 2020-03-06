@@ -48,7 +48,8 @@ class Photo extends ActiveRecord
                 'attribute' => 'file',
                 'createThumbsOnRequest' => true,
                  // путь для загрузки Картинок
-                'filePath' => '@common/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
+                'filePath' => '@common/upload/origin/products/[[attribute_product_id]
+                 ]/[[id]].[[extension]]',
                  // путь для отображения (урл)
                 'fileUrl' => '@common/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
                 // путь для загрузки thumb
