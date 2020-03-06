@@ -51,6 +51,9 @@
                             [
                                 'label' => 'Характиристики', 'icon' => 'dashboard', 'url' => ['/shop/characteristics/'],
                             ],
+                            [
+                                'label' => 'Tags', 'icon' => 'dashboard', 'url' => ['/shop/tag/'],
+                            ],
                         ],
                     ],
 
