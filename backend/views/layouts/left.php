@@ -54,6 +54,9 @@
                             [
                                 'label' => 'Tags', 'icon' => 'dashboard', 'url' => ['/shop/tag/'],
                             ],
+                            [
+                                'label' => 'Продукция печатная', 'icon' => 'dashboard', 'url' => ['/shop/product/'],
+                            ],
                         ],
                     ],
 

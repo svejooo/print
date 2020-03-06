@@ -4,7 +4,10 @@
 namespace backend\controllers\shop;
 
 
+use backend\forms\Shop\ProductSearch;
 use shop\services\manage\Shop\ProductManageService;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 
 class ProductController extends Controller

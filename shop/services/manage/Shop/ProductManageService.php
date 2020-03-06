@@ -14,7 +14,7 @@ use shop\forms\shop\Product\ProductEditForm;
 use shop\repositories\Shop\BrandRepository;
 use shop\repositories\Shop\CategoryRepository;
 use shop\repositories\Shop\ProductRepository;
-use shop\repositories\TagRepository;
+use shop\repositories\Shop\TagRepository;
 use shop\services\TransactionManager;
 
 class ProductManageService
