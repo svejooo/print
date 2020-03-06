@@ -117,6 +117,11 @@ class Characteristics extends ActiveRecord
         return $this->type === self::TYPE_FLOAT;
     }
 
+    public function isBool(): bool
+    {
+        return $this->type === self::BOOLEAN;
+    }
+
     public function isSelect(): bool
     {
         return count($this->variants) > 0;

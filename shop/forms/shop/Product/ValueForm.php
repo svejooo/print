@@ -28,6 +28,7 @@ class ValueForm extends Model
         parent::__construct($config);
     }
 
+    // Валидируем в зависимости от типа данных - ДИНАМИЧЕСКАЯ ВАЛИДАЦИЯ
     public function rules(): array
     {
         return array_filter([
@@ -36,6 +37,7 @@ class ValueForm extends Model
             $this->_characteristic->isString() ? ['value', 'string', 'max' => 255] : false,
             $this->_characteristic->isInteger() ? ['value', 'integer'] : false,
             $this->_characteristic->isFloat() ? ['value', 'number'] : false,
+            $this->_characteristic->isBool() ? ['value', 'string'] : false,   // TODO - тип данных булевый - нада заменить
             ['value', 'safe'],
 
         ]);
@@ -46,6 +48,11 @@ class ValueForm extends Model
         return [
             'value' => $this->_characteristic->name,
         ];
+    }
+
+    public function variantsList(): array
+    {
+        return $this->_characteristic->variants ? array_combine($this->_characteristic->variants, $this->_characteristic->variants) : [];
     }
 
     public function getId(): int
