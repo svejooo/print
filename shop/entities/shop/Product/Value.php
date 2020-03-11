@@ -4,6 +4,8 @@
 namespace shop\entities\shop\Product;
 
 
+use shop\entities\shop\Characteristics;
+use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 
 /**
@@ -35,6 +37,11 @@ class Value extends ActiveRecord
     public function isForCharacteristic($id): bool
     {
         return $this->characteristic_id == $id;
+    }
+
+    public function getCharacteristic(): ActiveQuery
+    {
+        return $this->hasOne(Characteristics::class, ['id' => 'characteristic_id']);
     }
 
     public static function tableName(): string

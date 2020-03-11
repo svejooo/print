@@ -6,13 +6,16 @@ namespace backend\controllers\shop;
 
 use backend\forms\Shop\ProductSearch;
 use shop\entities\shop\Product\Modification;
+use shop\entities\shop\Product\Product;
 use shop\forms\shop\Product\PhotosForm;
+use shop\forms\shop\Product\PriceForm;
 use shop\forms\shop\Product\ProductCreateForm;
 use shop\services\manage\Shop\ProductManageService;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
+use yii\web\NotFoundHttpException;
 
 class ProductController extends Controller
 {
@@ -106,4 +109,144 @@ class ProductController extends Controller
         ]);
     }
 
+
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionUpdate($id)
+    {
+        $product = $this->findModel($id);
+
+        $form = new ProductEditForm($product);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->service->edit($product->id, $form);
+                return $this->redirect(['view', 'id' => $product->id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+        return $this->render('update', [
+            'model' => $form,
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionPrice($id)
+    {
+        $product = $this->findModel($id);
+
+        $form = new PriceForm($product);
+        if ($form->load(Yii::$app->request->post()) && $form->validate()) {
+            try {
+                $this->service->changePrice($product->id, $form);
+                return $this->redirect(['view', 'id' => $product->id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+        }
+        return $this->render('price', [
+            'model' => $form,
+            'product' => $product,
+        ]);
+    }
+
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDelete($id)
+    {
+        try {
+            $this->service->remove($id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionActivate($id)
+    {
+//        try {
+//            $this->service->activate($id);
+//        } catch (\DomainException $e) {
+//            Yii::$app->session->setFlash('error', $e->getMessage());
+//        }
+//        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    /**
+     * @param integer $id
+     * @return mixed
+     */
+    public function actionDraft($id)
+    {
+//        try {
+//            $this->service->draft($id);
+//        } catch (\DomainException $e) {
+//            Yii::$app->session->setFlash('error', $e->getMessage());
+//        }
+//        return $this->redirect(['view', 'id' => $id]);
+    }
+
+    /**
+     * @param integer $id
+     * @param $photo_id
+     * @return mixed
+     */
+    public function actionDeletePhoto($id, $photo_id)
+    {
+        try {
+            $this->service->removePhoto($id, $photo_id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
+    }
+
+    /**
+     * @param integer $id
+     * @param $photo_id
+     * @return mixed
+     */
+    public function actionMovePhotoUp($id, $photo_id)
+    {
+        $this->service->movePhotoUp($id, $photo_id);
+        return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
+    }
+
+    /**
+     * @param integer $id
+     * @param $photo_id
+     * @return mixed
+     */
+    public function actionMovePhotoDown($id, $photo_id)
+    {
+        $this->service->movePhotoDown($id, $photo_id);
+        return $this->redirect(['view', 'id' => $id, '#' => 'photos']);
+    }
+
+    /**
+     * @param integer $id
+     * @return Product the loaded model
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    protected function findModel($id): Product
+    {
+        if (($model = Product::findOne($id)) !== null) {
+            return $model;
+        }
+        throw new NotFoundHttpException('The requested page does not exist.');
+    }
 }

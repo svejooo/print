@@ -966,8 +966,16 @@ class GD extends PHPThumb
      * @param array $options
      * @return GD
      */
+    //public function setOptions(array $options = array())
     public function setOptions(array $options = array())
     {
+
+        var_dump( $this->options );
+        //exit;
+//
+//        $this->options = array() ;
+//        $this->options = $options ;
+
         // we've yet to init the default options, so create them here
         if (sizeof($this->options) == 0) {
             $defaultOptions = array(

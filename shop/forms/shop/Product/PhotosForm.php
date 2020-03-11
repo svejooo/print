@@ -18,15 +18,17 @@ class PhotosForm extends Model
     {
         return [
             ['files', 'each', 'rule' => ['image']],  // Валидируем массив с картинками
-            ['files',  'image'],  // Валидация - Если принимаем одну картинку
+           // ['files',  'image'],  // Валидация - Если принимаем одну картинку
         ];
     }
 
-    public function beforeValidate(): bool
+    //public function beforeValidate(): bool
+    public function afterValidate(): bool
     {
+
         if (parent::beforeValidate()) {
             $this->files = UploadedFile::getInstances($this, 'files');
-            return true;
+               return true;
         }
         return false;
     }
