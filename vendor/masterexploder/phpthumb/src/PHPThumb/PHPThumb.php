@@ -61,8 +61,7 @@ abstract class PHPThumb
             throw new \InvalidArgumentException("Image file not found: {$fileName}");
         }
         
-            //var_dump($options);
-            //exit;
+        
         $this->setOptions($options);
 
         $this->plugins = $plugins;

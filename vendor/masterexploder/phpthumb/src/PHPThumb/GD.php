@@ -56,7 +56,8 @@ class GD extends PHPThumb
      *
      * @var array
      */
-    protected $options;
+    //protected $options;
+    protected $options = [];
 
     /**
      * The maximum width an image can be after resizing (in pixels)
@@ -970,11 +971,6 @@ class GD extends PHPThumb
     public function setOptions(array $options = array())
     {
 
-        var_dump( $this->options );
-        //exit;
-//
-//        $this->options = array() ;
-//        $this->options = $options ;
 
         // we've yet to init the default options, so create them here
         if (sizeof($this->options) == 0) {
