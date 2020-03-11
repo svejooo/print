@@ -51,8 +51,10 @@ class ComposerStaticInite50bb6a871eec6376e517505596b987f
         ),
         'k' => 
         array (
+            'kartik\\plugins\\fileinput\\' => 25,
             'kartik\\helpers\\' => 15,
             'kartik\\form\\' => 12,
+            'kartik\\file\\' => 12,
             'kartik\\field\\' => 13,
             'kartik\\datetime\\' => 16,
             'kartik\\date\\' => 12,
@@ -183,6 +185,10 @@ class ComposerStaticInite50bb6a871eec6376e517505596b987f
         array (
             0 => __DIR__ . '/..' . '/la-haute-societe/yii2-save-relations-behavior/src',
         ),
+        'kartik\\plugins\\fileinput\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/bootstrap-fileinput',
+        ),
         'kartik\\helpers\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-helpers/src',
@@ -190,6 +196,10 @@ class ComposerStaticInite50bb6a871eec6376e517505596b987f
         'kartik\\form\\' => 
         array (
             0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-activeform/src',
+        ),
+        'kartik\\file\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/kartik-v/yii2-widget-fileinput/src',
         ),
         'kartik\\field\\' => 
         array (
