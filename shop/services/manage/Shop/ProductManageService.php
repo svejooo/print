@@ -7,6 +7,7 @@ namespace shop\services\manage\Shop;
 use shop\entities\Meta;
 use shop\entities\shop\Product\Product;
 use shop\entities\shop\Tag;
+use shop\forms\shop\Product\ModificationForm;
 use shop\forms\shop\Product\PhotosForm;
 use shop\forms\shop\Product\PriceForm;
 use shop\forms\shop\Product\ProductCreateForm;
@@ -199,5 +200,43 @@ class ProductManageService
 
 
 
+    #----------------------- Модификации -------------------------------------#
+    public function addModification($id, ModificationForm $form): void
+    {
+        $product = $this->products->get($id);
+        $product->addModification(
+            $form->code,
+            $form->name,
+            $form->price
+        );
+        $this->products->save($product);
+    }
+
+    public function editModification($id, $modificationId, ModificationForm $form): void
+    {
+        $product = $this->products->get($id);
+        $product->editModification(
+            $modificationId,
+            $form->code,
+            $form->name,
+            $form->price
+        );
+        $this->products->save($product);
+    }
+
+    public function removeModification($id, $modificationId): void
+    {
+        $product = $this->products->get($id);
+        $product->removeModification($modificationId);
+        $this->products->save($product);
+    }
+
+    public function remove($id): void
+    {
+        $product = $this->products->get($id);
+        $this->products->remove($product);
+    }
+    #-----------------------emd Модификации -------------------------------------#
+    #----------------------------------------------------------------------------#
 
 }
