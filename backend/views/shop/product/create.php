@@ -1,11 +1,9 @@
 <?php
 
-
-
 /* @var $this yii\web\View */
 /* @var $model \shop\forms\shop\Product\ProductCreateForm */
 
-$this->title = 'Create Product';
+$this->title = 'Добавить товарную позицию';
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
@@ -32,7 +30,7 @@ use yii\widgets\ActiveForm; ?>
                     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
                 </div>
             </div>
-            <?= $form->field($model, 'description')->textarea(['rows' => 10]) ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => 5]) ?>
         </div>
     </div>
 
@@ -49,6 +47,7 @@ use yii\widgets\ActiveForm; ?>
             </div>
         </div>
     </div>
+
 
     <div class="row">
         <div class="col-md-6">

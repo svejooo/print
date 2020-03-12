@@ -55,6 +55,7 @@ class ProductController extends Controller
     }
 
 
+
     public function actionView($id)
     {
         $product = $this->findModel($id);
@@ -69,6 +70,7 @@ class ProductController extends Controller
             },
             'pagination' => false,
         ]);
+
 
         $photosForm = new PhotosForm();
         if ($photosForm->load(Yii::$app->request->post()) && $photosForm->validate()) {

@@ -82,7 +82,12 @@ use yii\widgets\DetailView;
                     ]) ?>
                     <br />
                     <p>
-                        <?= Html::a('Change Price', ['price', 'id' => $product->id], ['class' => 'btn btn-primary']) ?>
+
+                        <?php
+                        // TODO добавить экшн
+                        echo Html::a('Изменить цену', ['price', 'id' => $product->id], ['class' => 'btn btn-primary'])
+
+                        ?>
                     </p>
                 </div>
             </div>
@@ -110,15 +115,17 @@ use yii\widgets\DetailView;
     <div class="box">
         <div class="box-header with-border">Description</div>
         <div class="box-body">
-            <?= Yii::$app->formatter->asNtext($product->description) ?>
+            <?php
+                echo Yii::$app->formatter->asNtext($product->description)
+            ?>
         </div>
     </div>
 
     <div class="box" id="modifications">
-        <div class="box-header with-border">Modifications</div>
+        <div class="box-header with-border">Модификации</div>
         <div class="box-body">
             <p>
-                <?= Html::a('Add Modification', ['shop/modification/create', 'product_id' => $product->id], ['class' => 'btn btn-success']) ?>
+                <?= Html::a('Добавить модификациют', ['shop/modification/create', 'product_id' => $product->id], ['class' => 'btn btn-success']) ?>
             </p>
             <?= GridView::widget([
                 'dataProvider' => $modificationsProvider,
