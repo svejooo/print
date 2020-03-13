@@ -166,6 +166,7 @@ class Product extends ActiveRecord
         throw new \DomainException('Photo is not found.');
     }
 
+
     public function removePhotos(): void
     {
         $this->updatePhotos([]);
@@ -210,7 +211,16 @@ class Product extends ActiveRecord
             $photo->setSort($i);
         }
         $this->photos = $photos;
+        $this->populateRelation('mainPhoto', reset($photos));
     }
+
+//    private function updatePhotos(array $photos): void
+//    {
+//        foreach ($photos as $i => $photo) {
+//            $photo->setSort($i);
+//        }
+//        $this->photos = $photos;
+//    }
     // end Photos --------------------------------------------------
 
 
@@ -493,6 +503,7 @@ class Product extends ActiveRecord
             [
                 'class' => SaveRelationsBehavior::className(),
                 'relations' => ['categoryAssignments', 'tagAssignments', 'relatedAssignments', 'modifications', 'values', 'photos', 'reviews'],
+                //'relations' => ['categoryAssignments', 'tagAssignments', 'relatedAssignments', 'modifications', 'values', 'photos', 'reviews'],
                 //'relations' => ['categoryAssignments'],
             ],
         ];
@@ -505,15 +516,33 @@ class Product extends ActiveRecord
         ];
     }
 
+    public function beforeDelete(): bool
+    {
+        if (parent::beforeDelete()) {
+            foreach ($this->photos as $photo) {
+                $photo->delete();
+            }
+            return true;
+        }
+        return false;
+    }
 
     public function afterSave($insert, $changedAttributes): void
     {
+
         $related = $this->getRelatedRecords();
-        parent::afterSave($insert, $changedAttributes);
         if (array_key_exists('mainPhoto', $related)) {
             $this->updateAttributes(['main_photo_id' => $related['mainPhoto'] ? $related['mainPhoto']->id : null]);
         }
+        parent::afterSave($insert, $changedAttributes);
+
+//        $related = $this->getRelatedRecords();
+//        parent::afterSave($insert, $changedAttributes);
+//        if (array_key_exists('mainPhoto', $related)) {
+//            $this->updateAttributes(['main_photo_id' => $related['mainPhoto'] ? $related['mainPhoto']->id : null]);
     }
+
+
 
 //    public static function find(): ProductQuery
 //    {

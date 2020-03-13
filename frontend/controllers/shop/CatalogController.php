@@ -18,6 +18,7 @@ class CatalogController extends Controller
 {
 
     private $service;
+    public $layout = 'catalog';
 
     public function __construct($id, $module, ProductManageService $service,  $config = [])
     {
