@@ -120,28 +120,32 @@ class ProductManageService
             )
         );
 
+        // Пробуем исправить ошибку  sql при апдейте
         $product->changeMainCategory($category->id);
-        //Удаляем предыдущие категории
-        $product->revokeCategories();
-        // И присваеиваем новые
-        foreach ($form->categories->others as $otherId) {
-            $category = $this->categories->get($otherId);
-            $product->assignCategory($category->id);
-        }
-        // Проставляем новые значения  атрибутов
-        foreach ($form->values as $value) {
-            $product->setValue($value->id, $value->value);
-        }
-
-        // Удаляенм предыдыщие теги
-        $product->revokeTags();
-        // И добавляем новые
-        foreach ($form->tags->existing as $tagId) {
-            $tag = $this->tags->get($tagId);
-            $product->assignTag($tag->id);
-        }
 
         $this->transaction->wrap(function () use ($product, $form) {
+
+            //Удаляем предыдущие категории
+            $product->revokeCategories();
+            // Удаляенм предыдыщие теги
+            $product->revokeTags();
+            // Сохраняем продукт
+            $this->products->save($product);
+
+            // И присваеиваем новые категории
+            foreach ($form->categories->others as $otherId) {
+                $category = $this->categories->get($otherId);
+                $product->assignCategory($category->id);
+            }
+            // Проставляем новые значения  атрибутов
+            foreach ($form->values as $value) {
+                $product->setValue($value->id, $value->value);
+            }
+            // И добавляем новые теги
+            foreach ($form->tags->existing as $tagId) {
+                $tag = $this->tags->get($tagId);
+                $product->assignTag($tag->id);
+            }
             foreach ($form->tags->newNames as $tagName) {
                 if (!$tag = $this->tags->findByName($tagName)) {
                     $tag = Tag::create($tagName, $tagName);
@@ -149,8 +153,47 @@ class ProductManageService
                 }
                 $product->assignTag($tag->id);
             }
+            // Еще раз сохраняем
             $this->products->save($product);
         });
+
+
+
+
+
+
+//        $product->changeMainCategory($category->id);
+//
+//        //Удаляем предыдущие категории
+//        $product->revokeCategories();
+//        // И присваеиваем новые
+//        foreach ($form->categories->others as $otherId) {
+//            $category = $this->categories->get($otherId);
+//            $product->assignCategory($category->id);
+//        }
+//        // Проставляем новые значения  атрибутов
+//        foreach ($form->values as $value) {
+//            $product->setValue($value->id, $value->value);
+//        }
+//
+//        // Удаляенм предыдыщие теги
+//        $product->revokeTags();
+//        // И добавляем новые
+//        foreach ($form->tags->existing as $tagId) {
+//            $tag = $this->tags->get($tagId);
+//            $product->assignTag($tag->id);
+//        }
+//
+//        $this->transaction->wrap(function () use ($product, $form) {
+//            foreach ($form->tags->newNames as $tagName) {
+//                if (!$tag = $this->tags->findByName($tagName)) {
+//                    $tag = Tag::create($tagName, $tagName);
+//                    $this->tags->save($tag);
+//                }
+//                $product->assignTag($tag->id);
+//            }
+//            $this->products->save($product);
+//        });
     }
 
 
