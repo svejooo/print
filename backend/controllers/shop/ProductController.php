@@ -10,6 +10,7 @@ use shop\entities\shop\Product\Product;
 use shop\forms\shop\Product\PhotosForm;
 use shop\forms\shop\Product\PriceForm;
 use shop\forms\shop\Product\ProductCreateForm;
+use shop\forms\shop\Product\ProductEditForm;
 use shop\services\manage\Shop\ProductManageService;
 use Yii;
 use yii\data\ActiveDataProvider;

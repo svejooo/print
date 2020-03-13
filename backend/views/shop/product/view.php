@@ -1,10 +1,4 @@
 <?php
-
-/* @var $this yii\web\View */
-/* @var $product shop\entities\Shop\Product\Product */
-/* @var $photosForm shop\forms\shop\Product\PhotosForm */
-/* @var $modificationsProvider yii\data\ActiveDataProvider */
-
 $this->title = $product->name;
 $this->params['breadcrumbs'][] = ['label' => 'Products', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
@@ -172,11 +166,13 @@ use yii\widgets\DetailView;
     </div>
 
     <div class="box" id="photos">
-        <div class="box-header with-border">Photos</div>
+        <div class="box-header with-border">Картинки</div>
         <div class="box-body">
 
             <div class="row">
-                <?php foreach ($product->photos as $photo): ?>
+                <?php foreach ($product->photos as $photo):
+                     // var_dump($photo);
+                    ?>
                     <div class="col-md-2 col-xs-3" style="text-align: center">
                         <div class="btn-group">
                             <?= Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['move-photo-up', 'id' => $product->id, 'photo_id' => $photo->id], [
@@ -194,6 +190,7 @@ use yii\widgets\DetailView;
                             ]); ?>
                         </div>
                         <div>
+                            <?= $photo->id ?>
                             <?= Html::a(
                                 Html::img($photo->getThumbFileUrl('file', 'thumb')),
                                 $photo->getUploadedFileUrl('file'),

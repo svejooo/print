@@ -4,7 +4,6 @@
 namespace shop\entities\shop\Product;
 
 
-
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
 use yiidreamteam\upload\ImageUploadBehavior;
@@ -23,6 +22,7 @@ class Photo extends ActiveRecord
         $photo->file = $file;
         return $photo;
     }
+
 
     public function setSort($sort): void
     {
@@ -50,10 +50,10 @@ class Photo extends ActiveRecord
                  // путь для загрузки Картинок
                 'filePath' => '@common/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
                  // путь для отображения (урл)
-                'fileUrl' => '@common/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
+                'fileUrl' => '/assets/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
                 // путь для загрузки thumb
                 'thumbPath' => '@common/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]',
-                'thumbUrl' => '@common/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]',
+                'thumbUrl' => '/assets/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]',
 
                 //'filePath' => '@staticRoot/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
                 //'fileUrl' => '@static/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
