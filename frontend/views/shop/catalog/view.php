@@ -26,22 +26,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
 <div class="user-view">
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $product->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $product->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
     <div class="row">
         <div class="col-md-6">
             <div class="box">
-                <div class="box-header with-border">Common</div>
+                <div class="box-header with-border">Общая информация</div>
                 <div class="box-body">
                     <?= DetailView::widget([
                         'model' => $product,
@@ -75,22 +63,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                         ],
                     ]) ?>
-                    <br />
-                    <p>
-
-                        <?php
-                        // TODO добавить экшн
-                        echo Html::a('Изменить цену', ['price', 'id' => $product->id], ['class' => 'btn btn-primary'])
-
-                        ?>
-                    </p>
                 </div>
             </div>
         </div>
         <div class="col-md-6">
 
             <div class="box box-default">
-                <div class="box-header with-border">Characteristics</div>
+                <div class="box-header with-border">{Характиристики}</div>
                 <div class="box-body">
 
                     <?= DetailView::widget([
@@ -107,21 +86,10 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="box">
-        <div class="box-header with-border">Description</div>
-        <div class="box-body">
-            <?php
-                echo Yii::$app->formatter->asNtext($product->description)
-            ?>
-        </div>
-    </div>
-
     <div class="box" id="modifications">
         <div class="box-header with-border">Модификации</div>
         <div class="box-body">
-            <p>
-                <?= Html::a('Добавить модификациют', ['shop/modification/create', 'product_id' => $product->id], ['class' => 'btn btn-success']) ?>
-            </p>
+
             <?= GridView::widget([
                 'dataProvider' => $modificationsProvider,
                 'columns' => [
@@ -136,60 +104,28 @@ $this->params['breadcrumbs'][] = $this->title;
                     [
                         'class' => ActionColumn::class,
                         'controller' => 'shop/modification',
-                        'template' => '{update} {delete}',
+                        'template' => '{view}',
                     ],
                 ],
             ]); ?>
         </div>
     </div>
 
-    <div class="box">
-        <div class="box-header with-border">SEO</div>
-        <div class="box-body">
-            <?= DetailView::widget([
-                'model' => $product,
-                'attributes' => [
-                    [
-                        'attribute' => 'meta.title',
-                        'value' => $product->meta->title,
-                    ],
-                    [
-                        'attribute' => 'meta.description',
-                        'value' => $product->meta->description,
-                    ],
-                    [
-                        'attribute' => 'meta.keywords',
-                        'value' => $product->meta->keywords,
-                    ],
-                ],
-            ]) ?>
-        </div>
-    </div>
+    <?php
+     echo $product->meta->title; $product->meta->description;
+     echo '<hr>';
+    ?>
 
     <div class="box" id="photos">
-        <div class="box-header with-border">Картинки</div>
+        <div class="box-header with-border">Загрузить макет</div>
         <div class="box-body">
 
             <div class="row">
                 <?php foreach ($product->photos as $photo):
-                     // var_dump($photo);
+                    // var_dump($photo);
                     ?>
                     <div class="col-md-2 col-xs-3" style="text-align: center">
-                        <div class="btn-group">
-                            <?= Html::a('<span class="glyphicon glyphicon-arrow-left"></span>', ['move-photo-up', 'id' => $product->id, 'photo_id' => $photo->id], [
-                                'class' => 'btn btn-default',
-                                'data-method' => 'post',
-                            ]); ?>
-                            <?= Html::a('<span class="glyphicon glyphicon-remove"></span>', ['delete-photo', 'id' => $product->id, 'photo_id' => $photo->id], [
-                                'class' => 'btn btn-default',
-                                'data-method' => 'post',
-                                'data-confirm' => 'Remove photo?',
-                            ]); ?>
-                            <?= Html::a('<span class="glyphicon glyphicon-arrow-right"></span>', ['move-photo-down', 'id' => $product->id, 'photo_id' => $photo->id], [
-                                'class' => 'btn btn-default',
-                                'data-method' => 'post',
-                            ]); ?>
-                        </div>
+
                         <div>
                             <?= $photo->id ?>
                             <?= Html::a(

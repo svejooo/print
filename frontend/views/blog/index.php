@@ -1,2 +1,5 @@
+<?php
 
-<p>3333333333</p>
+echo file_get_contents('https://pmg.ru/uslugi/');
+
+?>

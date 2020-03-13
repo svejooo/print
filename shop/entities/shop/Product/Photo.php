@@ -70,4 +70,6 @@ class Photo extends ActiveRecord
             ],
         ];
     }
+
+
 }
