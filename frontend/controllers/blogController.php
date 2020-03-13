@@ -11,4 +11,6 @@ class BlogController extends Controller
         return $this->render('index');
     }
 
+
+
 }
