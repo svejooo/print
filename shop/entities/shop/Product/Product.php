@@ -529,12 +529,15 @@ class Product extends ActiveRecord
 
     public function afterSave($insert, $changedAttributes): void
     {
-
+        // Сначала получаем  старые связанные записи
         $related = $this->getRelatedRecords();
+        // Потом сохраняем
+        parent::afterSave($insert, $changedAttributes);
+        // И потом уже назначаем  главную фотку
         if (array_key_exists('mainPhoto', $related)) {
             $this->updateAttributes(['main_photo_id' => $related['mainPhoto'] ? $related['mainPhoto']->id : null]);
         }
-        parent::afterSave($insert, $changedAttributes);
+
 
 //        $related = $this->getRelatedRecords();
 //        parent::afterSave($insert, $changedAttributes);
