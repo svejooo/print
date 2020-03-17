@@ -42,6 +42,24 @@ class ProductManageService
         $this->tags = $tags;
     }
 
+    public function activate($id): void
+    {
+        $product = $this->products->get($id);
+        $product->activate();
+        $this->products->save($product);
+    }
+
+    public function draft($id): void
+    {
+        $product = $this->products->get($id);
+        $product->draft();
+        $this->products->save($product);
+
+    }
+
+
+
+
     public function create(ProductCreateForm $form): Product
     {
         $brand = $this->brands->get($form->brandId);

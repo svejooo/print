@@ -6,6 +6,7 @@ use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
 use shop\entities\shop\Brand;
 use shop\entities\shop\Category;
+use shop\entities\shop\queries\ProductQuery;
 use shop\entities\shop\Tag;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
@@ -25,6 +26,7 @@ use yii\web\UploadedFile;
  * @property integer $rating
  * @property integer $main_photo_id
  *
+ * @property integer $status
  * @property Meta $meta
  * @property Brand $brand
  * @property Category $category
@@ -43,7 +45,11 @@ use yii\web\UploadedFile;
 
 class Product extends ActiveRecord
 {
+    const STATUS_DRAFT = 0;
+    const STATUS_ACTIVE = 1;
+    const STATUS_PREPARE = 2;
 
+    //public $status;
     public $meta;
 
     public static function create($brandId, $categoryId, $code, $name, Meta $meta): self
@@ -54,10 +60,34 @@ class Product extends ActiveRecord
         $product->code = $code;
         $product->name = $name;
         $product->meta = $meta;
+        // По умолчанию при создании товара будет драфт
+        $product->status = self::STATUS_DRAFT;
         $product->created_at = time();
         return $product;
+    }
+
+
+    public static function find(): ProductQuery
+    {
+        return new ProductQuery( static::class );
+    }
+
+    public function activate()
+    {
+        if ($this->isActive())
+            throw new \DomainException("Уже активировано");
+        $this->status = self::STATUS_ACTIVE;
 
     }
+
+    public function draft()
+    {
+        if ($this->isDraft())
+            throw new \DomainException("Уже отключено!");
+        $this->status = self::STATUS_DRAFT;
+
+    }
+
 
     public function setPrice($new, $old): void
     {
@@ -551,6 +581,18 @@ class Product extends ActiveRecord
 //    {
 //        return new ProductQuery(static::class);
 //    }
+
+
+    public function isActive(): bool
+    {
+        return $this->status == self::STATUS_ACTIVE;
+    }
+
+    public function isDraft(): bool
+    {
+        return $this->status == self::STATUS_DRAFT;
+    }
+
 
 
 }

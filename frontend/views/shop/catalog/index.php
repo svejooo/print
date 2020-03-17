@@ -21,7 +21,7 @@ use yii\helpers\Html; ?>
         <div class="box-body">
             <?= GridView::widget([
                 'dataProvider' => $dataProvider,
-                'filterModel' => $searchModel,
+
                 'columns' => [
                     [
                         'value' => function (Product $model) {

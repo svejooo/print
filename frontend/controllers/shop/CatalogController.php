@@ -26,14 +26,30 @@ class CatalogController extends Controller
         $this->service = $service;
     }
 
-    public function  actionIndex(){
-        $searchModel = new ProductSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
+    public function  actionIndex()
+    {
+        $dataProvider = new ActiveDataProvider([
+            'query' => Product::find()->active()->all(),
+            'sort' => [
+               'defaultOrder' => ['id' => SORT_DESC],
+               'attributes' =>[
+                   'id',
+                   'name',
+                   'price' => [
+                       'asc' => ['price_new' => SORT_ASC],
+                       'desc' => ['price_new' => SORT_DESC],
+                   ]
+               ]
+            ],
+            'pagination' => false,
         ]);
+
+        return $this->render('index');
+
+        //$searchModel = Product::find()->active()->all();
+        //var_dump( $searchModel[0]);
+
 
     }
 

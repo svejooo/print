@@ -38,6 +38,8 @@ class ProductController extends Controller
                     'delete-photo' => ['POST'],
                     'move-photo-up' => ['POST'],
                     'move-photo-down' => ['POST'],
+                    'activate' => ['POST'],
+                    'draft' => ['POST'],
                 ],
             ],
         ];
@@ -181,12 +183,12 @@ class ProductController extends Controller
      */
     public function actionActivate($id)
     {
-//        try {
-//            $this->service->activate($id);
-//        } catch (\DomainException $e) {
-//            Yii::$app->session->setFlash('error', $e->getMessage());
-//        }
-//        return $this->redirect(['view', 'id' => $id]);
+        try {
+            $this->service->activate($id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     /**
@@ -195,12 +197,12 @@ class ProductController extends Controller
      */
     public function actionDraft($id)
     {
-//        try {
-//            $this->service->draft($id);
-//        } catch (\DomainException $e) {
-//            Yii::$app->session->setFlash('error', $e->getMessage());
-//        }
-//        return $this->redirect(['view', 'id' => $id]);
+        try {
+            $this->service->draft($id);
+        } catch (\DomainException $e) {
+            Yii::$app->session->setFlash('error', $e->getMessage());
+        }
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     /**
