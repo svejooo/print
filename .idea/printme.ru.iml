@@ -84,6 +84,8 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php73" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/service-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/yaml" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tecnickcom/tc-lib-barcode" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/tecnickcom/tc-lib-color" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/theseer/tokenizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/tzurbaev/osnova-api" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/webmozart/assert" />

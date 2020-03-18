@@ -69,8 +69,9 @@ class Product extends ActiveRecord
 
     public static function find(): ProductQuery
     {
-        return new ProductQuery( static::class );
+         return new ProductQuery( static::class );
     }
+
 
     public function activate()
     {

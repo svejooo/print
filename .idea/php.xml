@@ -97,6 +97,8 @@
       <path value="$PROJECT_DIR$/vendor/tzurbaev/osnova-api" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
       <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/tecnickcom/tc-lib-color" />
+      <path value="$PROJECT_DIR$/vendor/tecnickcom/tc-lib-barcode" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
