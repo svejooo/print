@@ -47,18 +47,20 @@ class Photo extends ActiveRecord
                 'class' => ImageUploadBehavior::className(),
                 'attribute' => 'file',
                 'createThumbsOnRequest' => false,
-                 // путь для загрузки Картинок
-                'filePath' => '@common/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
-                 // путь для отображения (урл)
-                'fileUrl' => '/assets/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
-                // путь для загрузки thumb
-                'thumbPath' => '@common/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]',
-                'thumbUrl' => '/assets/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]',
 
-                //'filePath' => '@staticRoot/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
-                //'fileUrl' => '@static/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
-                //'thumbPath' => '@staticRoot/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]',
-                //'thumbUrl' => '@static/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]',
+                 /* КАРТИНКА*/
+                // путь для загрузки Картинок
+                'filePath' => '@staticRoot/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
+                 // путь для отображения (урл)
+                'fileUrl' => '@static/upload/origin/products/[[attribute_product_id]]/[[id]].[[extension]]',
+
+
+                /* ПРЕВЬЮ  */
+                // путь для загрузки thumb
+                'thumbPath' => '@staticRoot/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]',
+                'thumbUrl' => '@static/upload/cache/products/[[attribute_product_id]]/[[profile]]_[[id]].[[extension]]',
+
+
                 'thumbs' => [
                     'admin' => ['width' => 100, 'height' => 70],
                     'thumb' => ['width' => 640, 'height' => 480],

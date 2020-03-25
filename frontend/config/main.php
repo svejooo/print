@@ -11,8 +11,8 @@ return [
     'name'=>'Printme - Онлайн типография',
     'basePath' => dirname(__DIR__),
     'aliases'=>[
-        '@staticRoot' => dirname( __DIR__) . '/../static',
-        '@static' => 'http://static.x-printme-frontend.ru',
+        '@staticRoot' => $params['staticPath'],
+        '@static' => $params['staticHost'],
     ],
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
