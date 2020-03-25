@@ -75,5 +75,5 @@ Vagrant.configure(2) do |config|
 
 
   # post-install message (vagrant console)
-  config.vm.post_up_message = "Frontend URL: http://#{domains[:frontend]}\nBackend URL: http://#{domains[:backend]}"
+    config.vm.post_up_message = "Frontend URL: http://#{domains[:frontend]}\nBackend URL: http://#{domains[:backend]}\nStatic URL: http://#{domains[:static]}"
 end
