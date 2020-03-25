@@ -1,0 +1,2 @@
+2020/03/25 11:30:17 [error] 1666#1666: *7 directory index of "/app/static/" is forbidden, client: 192.168.81.1, server: static.x-printme-frontend.ru, request: "GET / HTTP/1.1", host: "static.x-printme-frontend.ru"
+2020/03/25 11:30:17 [error] 1666#1666: *7 open() "/app/static/favicon.ico" failed (2: No such file or directory), client: 192.168.81.1, server: static.x-printme-frontend.ru, request: "GET /favicon.ico HTTP/1.1", host: "static.x-printme-frontend.ru", referrer: "http://static.x-printme-frontend.ru/"

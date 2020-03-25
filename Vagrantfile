@@ -8,7 +8,9 @@ end
 
 domains = {
   frontend: 'x-printme-frontend.ru',
-  backend:  'x-printme-backend.ru'
+  backend:  'x-printme-backend.ru',
+  static:  'static.x-printme-frontend.ru'
+
 }
 
 config = {

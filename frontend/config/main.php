@@ -10,6 +10,10 @@ return [
     'id' => 'app-frontend',
     'name'=>'Printme - Онлайн типография',
     'basePath' => dirname(__DIR__),
+    'aliases'=>[
+        '@staticRoot' => dirname( __DIR__) . '/../static',
+        '@static' => 'http://static.x-printme-frontend.ru',
+    ],
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
