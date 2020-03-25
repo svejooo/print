@@ -359,6 +359,58 @@ abstract class Type extends \Com\Tecnick\Barcode\Type\Convert
      *
      * @return string SVG code
      */
+    public function getSvgCodeForPdf()
+    {
+        // flags for htmlspecialchars
+        $hflag = ENT_NOQUOTES;
+        if (defined('ENT_XML1')) {
+            $hflag = ENT_XML1;
+        }
+        $width = sprintf('%F', ($this->width + $this->padding['L'] + $this->padding['R']));
+        $height = sprintf('%F', ($this->height + $this->padding['T'] + $this->padding['B']));
+        $svg = '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">'."\n"
+            .'<svg'
+            .' width="'.$width.'"'
+            .' height="'.$height.'"'
+            .' viewBox="0 0 '.$width.' '.$height.'"'
+            .' version="1.1"'
+            .' xmlns="http://www.w3.org/2000/svg"'
+            .'>'."\n"
+            ."\t".'<desc>'.htmlspecialchars($this->code, $hflag, 'UTF-8').'</desc>'."\n";
+        if ($this->bg_color_obj !== null) {
+            $svg .= "\t".'<rect'
+                .' x="0"'
+                .' y="0"'
+                .' width="'.$width.'"'
+                .' height="'.$height.'"'
+                .' fill="'.$this->bg_color_obj->getRgbHexColor().'"'
+                .' stroke="none"'
+                .' stroke-width="0"'
+                .' stroke-linecap="square"'
+                .' />'."\n";
+        }
+        $svg .= "\t".'<g'
+            .' id="bars"'
+            .' fill="'.$this->color_obj->getRgbHexColor().'"'
+            .' stroke="none"'
+            .' stroke-width="0"'
+            .' stroke-linecap="square"'
+            .'>'."\n";
+        $bars = $this->getBarsArray('XYWH');
+        foreach ($bars as $rect) {
+            $svg .= "\t\t".'<rect'
+                .' x="'.sprintf('%F', $rect[0]).'"'
+                .' y="'.sprintf('%F', $rect[1]).'"'
+                .' width="'.sprintf('%F', $rect[2]).'"'
+                .' height="'.sprintf('%F', $rect[3]).'"'
+                .' />'."\n";
+        }
+        $svg .= "\t".'</g>'."\n"
+            .'</svg>'."\n";
+        return $svg;
+    }
+
+
     public function getSvgCode()
     {
         // flags for htmlspecialchars

@@ -10,9 +10,11 @@ use shop\entities\Shop\Category;
 use shop\entities\shop\Product\Modification;
 use shop\entities\shop\Product\Product;
 use shop\forms\shop\Product\PhotosForm;
+use shop\repositories\NotFoundException;
 use shop\services\manage\Shop\ProductManageService;
 use Yii;
 use yii\data\ActiveDataProvider;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
@@ -25,6 +27,10 @@ class CatalogController extends Controller
     public $csvFile;
 
     public $layout = 'catalog';
+    private $products;
+    private $categories;
+    private $brands;
+    private $tags;
 
 
     public function __construct($id, $module, ProductManageService $service,  $config = [])
@@ -34,105 +40,57 @@ class CatalogController extends Controller
     }
 
 
-    public function actionBarcode(){
 
-        $command = 'ls '.Yii::getAlias('@frontend') . '/web/svg/*.csv';
-        exec($command, $arrCSV);
-        $this->csvFile =  $arrCSV[0];  ///app/frontend/web/svg/codes.csv
-        $this->svgPwd =  Yii::getAlias('@frontend') . '/web/svg/' . basename($this->csvFile, '.csv' ) ;
-
-        // Создаем папочку по имени файла
-        exec('mkdir '. $this->svgPwd );
-
-        // Читаем файл
-        $handle = fopen($this->csvFile,'r') or die('Не открывается - нет СТРОК');
-        $i = 1;
-        while ( ($data = fgetcsv($handle) ) !== FALSE ) {
-            // Имя файла по номеру строки
-            $this->createSvgBarcode( $data[0] , $i) ;
-            // имя файла по значению баркода
-            //$this->createSvgBarcode( $data[0] , $i) ;
-            $i++;
+    public function actionCategory($id)
+    {
+        // Находим категорию по id
+        if (!$category = Category::findOne($id)) {
+            throw new  NotFoundException('Нет такой категории.');
+            //throw new \DomainException('Нет такой категории.');
         }
 
-        $this->createZip();
-        echo 'Отрубилось на ' . $i  ;
+        $query = Product::find()->alias('p')->active('p')->with('mainPhoto', 'category');
+        $ids = ArrayHelper::merge([$category->id], $category->getDescendants()->select('id')->column());
+        $query->joinWith(['categoryAssignments ca'], false);
+        $query->andWhere(['or', ['p.category_id' => $ids], ['ca.category_id' => $ids]]);
+        $query->groupBy('p.id');
+       //return $this->getProvider($query);
+
+
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+            'sort' => [
+                'defaultOrder' => ['id' => SORT_DESC],
+                'attributes' =>[
+                    'id',
+                    'name',
+                    'price' => [
+                        'asc' => ['price_new' => SORT_ASC],
+                        'desc' => ['price_new' => SORT_DESC],
+                    ]
+                ]
+            ],
+            'pagination' => [
+                'pageSize' => 5,
+            ],
+        ]);
+
+
+        $cat = Category::find()->roots()->one();
+        return $this->render('index', [
+           'dataProvider' => $dataProvider,
+           'category'     => $cat,
+        ]);
+
     }
 
 
-    private function createZip()
-    {
-         $command = 'cd '.$this->svgPwd.'/ &&  zip -9 '.$this->svgPwd.'.zip  *' ;
-        exec($command);
-    }
-
-    public function actionQr(){
-$dataStr = "
-BEGIN:VCARD
-VERSION:3.0
-N:Василий Иванович Пупкин
-TEL;HOME;VOICE:0043-7252-72720
-TEL;WORK;VOICE:0043-7252-72720
-EMAIL:email@example.com
-ORG:TEC-IT
-URL:http://www.example.com
-END:VCARD";
-
-        $barcode = new Barcode();
-        // generate a barcode
-        $bobj = $barcode->getBarcodeObj(
-            'QRCODE',                     // barcode type and additional comma-separated parameters
-            $dataStr,          // data string to encode
-            -8,                             // bar width (use absolute or negative value as multiplication factor)
-            -8,                            // bar height (use absolute or negative value as multiplication factor)
-            'black',                        // foreground color
-            array(-2, -2, -2, -2)                 // padding (use absolute or negative values as multiplication factors)
-        )->setBackgroundColor('white');     // background color
-
-         echo $bobj->getHtmlDiv();
-    }
-
-    private function createSvgBarcode($str, $filename = false)
-    {
-        $dataStr = "
-        BEGIN:VCARD
-        VERSION:2.1
-        N:Василий Иванович Пупкин
-        TEL;HOME;VOICE:0043-7252-72720
-        TEL;WORK;VOICE:0043-7252-72720
-        EMAIL:email@example.com
-        ORG:TEC-IT
-        URL:http://www.example.com
-        END:VCARD";
-
-        // instantiate the barcode class
-        $barcode = new Barcode();
-        // generate a barcode
-        $bobj = $barcode->getBarcodeObj(
-            'DATAMATRIX',                     // barcode type and additional comma-separated parameters
-            $str,          // data string to encode
-            -8,                             // bar width (use absolute or negative value as multiplication factor)
-            -8,                            // bar height (use absolute or negative value as multiplication factor)
-            'black',                        // foreground color
-            array(-2, -2, -2, -2)                 // padding (use absolute or negative values as multiplication factors)
-        )->setBackgroundColor('white');     // background color
-
-        // output the barcode as HTML div (see other output formats in the documentation and examples)
-        //        echo $bobj->getHtmlDiv();
-        //        echo $bobj->getExtendedCode();
-        if(!$filename)
-            file_put_contents($this->svgPwd .  '/' . $str . '.svg', $bobj->getSvgCode() ) ;
-        else
-            file_put_contents($this->svgPwd .  '/' . $filename.'.svg', $bobj->getSvgCode() ) ;
-
-        //$filename = $this->svgFileName;
-        echo  $filename . '<br>';
-    }
 
     public function  actionIndex()
     {
+        $query = Product::find()->alias('p')->active('p')->with('mainPhoto');
         $dataProvider = new ActiveDataProvider([
-            'query' => Product::find()->active(),
+            'query' => $query,
             //'query' => Product::find()->active()->all(),
             //'query' => $product->getModifications()->orderBy('name'),
             'sort' => [
@@ -146,7 +104,9 @@ END:VCARD";
                    ]
                ]
             ],
-            'pagination' => false,
+            'pagination' => [
+                'pageSize' => 5,
+            ],
         ]);
 
         $cat = Category::find()->roots()->one();
@@ -220,18 +180,6 @@ END:VCARD";
     }
 
 
-    private function getZipFile()
-    {
-        /* TODO не работает   */
-        $file_name = basename($this->svgPwd . '.zip');
-
-        header("Content-Type: application/zip");
-        header("Content-Disposition: attachment; filename=$file_name");
-        header("Content-Length: " . filesize( $this->svgPwd . '.zip' ));
-
-        readfile($this->svgPwd . '.zip');
-        echo $this->svgPwd . '.zip';
-    }
 
 
 
