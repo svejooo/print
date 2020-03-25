@@ -133,25 +133,11 @@ class CatalogController extends Controller
     }
 
 
-//    public function  actionIndex()
-//    {
-//
-//        $searchModel = new CategorySearch();
-//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-//
-//        return $this->render('index', [
-//            'searchModel' => $searchModel,
-//            'dataProvider' => $dataProvider,
-//        ]);
-//    }
-
-
     public function actionView($id)
     {
         $product = $this->findModel($id);
 
         $modificationsProvider = new ActiveDataProvider([
-            //'query' => $product->getModifications()->orderBy('name'),
             'query' => $product->getModifications()->orderBy('name'),
             'key' => function (Modification $modification) use ($product) {
                 return [
@@ -180,6 +166,7 @@ class CatalogController extends Controller
             'photosForm' => $photosForm,
         ]);
     }
+
 
 
     #########################################################################
