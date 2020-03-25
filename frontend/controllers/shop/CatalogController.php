@@ -2,14 +2,15 @@
 
 namespace frontend\controllers\shop;
 
-
 use backend\forms\Shop\CategorySearch;
 use backend\forms\Shop\ProductSearch;
-use Com\Tecnick\Barcode\Barcode;
+
 use shop\entities\Shop\Category;
 use shop\entities\shop\Product\Modification;
 use shop\entities\shop\Product\Product;
+use shop\forms\shop\AddToCartForm;
 use shop\forms\shop\Product\PhotosForm;
+use shop\forms\shop\ReviewForm;
 use shop\repositories\NotFoundException;
 use shop\services\manage\Shop\ProductManageService;
 use Yii;
@@ -20,16 +21,12 @@ use yii\web\NotFoundHttpException;
 
 class CatalogController extends Controller
 {
-
     private $service;
-
-
     public $layout = 'catalog';
     private $products;
     private $categories;
     private $brands;
     private $tags;
-
 
     public function __construct($id, $module, ProductManageService $service,  $config = [])
     {
@@ -52,8 +49,8 @@ class CatalogController extends Controller
 
         return $this->render('product', [
             'product' => $product,
-            //'cartForm' => $cartForm,
-            //'reviewForm' => $reviewForm,
+            'cartForm' => $cartForm,
+            'reviewForm' => $reviewForm,
         ]);
     }
 
