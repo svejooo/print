@@ -47,8 +47,8 @@ class CatalogController extends Controller
 
         $this->layout = 'blank';
 
-        //$cartForm = new AddToCartForm($product);
-        //$reviewForm = new ReviewForm();
+        $cartForm = new AddToCartForm($product);
+        $reviewForm = new ReviewForm();
 
         return $this->render('product', [
             'product' => $product,
