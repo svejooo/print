@@ -22,9 +22,7 @@ class CatalogController extends Controller
 {
 
     private $service;
-    public $svgPwd;
-    public $csvFileName;
-    public $csvFile;
+
 
     public $layout = 'catalog';
     private $products;
@@ -38,6 +36,27 @@ class CatalogController extends Controller
         parent::__construct($id, $module, $config);
         $this->service = $service;
     }
+
+    public function actionProduct($id)
+    {
+        //if (!$product = $this->products->find($id))
+        //  throw new \DomainException('Такого продукта нет в системе');
+
+        if ( !$product = Product::find()->active()->andWhere(['id' => $id])->one() )
+            throw new \DomainException('Такого продукта нет в системе');
+
+        $this->layout = 'blank';
+
+        //$cartForm = new AddToCartForm($product);
+        //$reviewForm = new ReviewForm();
+
+        return $this->render('product', [
+            'product' => $product,
+            //'cartForm' => $cartForm,
+            //'reviewForm' => $reviewForm,
+        ]);
+    }
+
 
 
 
