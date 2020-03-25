@@ -60,10 +60,8 @@ class CatalogController extends Controller
     public function actionCategory($id)
     {
         // Находим категорию по id
-        if (!$category = Category::findOne($id)) {
+        if (!$category = Category::findOne($id))
             throw new  NotFoundException('Нет такой категории.');
-            //throw new \DomainException('Нет такой категории.');
-        }
 
         $query = Product::find()->alias('p')->active('p')->with('mainPhoto', 'category');
         $ids = ArrayHelper::merge([$category->id], $category->getDescendants()->select('id')->column());
@@ -71,7 +69,6 @@ class CatalogController extends Controller
         $query->andWhere(['or', ['p.category_id' => $ids], ['ca.category_id' => $ids]]);
         $query->groupBy('p.id');
        //return $this->getProvider($query);
-
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -91,11 +88,10 @@ class CatalogController extends Controller
             ],
         ]);
 
-
-        $cat = Category::find()->roots()->one();
-        return $this->render('index', [
+        //$cat = Category::find()->roots()->one();
+        return $this->render('category', [
            'dataProvider' => $dataProvider,
-           'category'     => $cat,
+           'category'     => $category,
         ]);
 
     }
