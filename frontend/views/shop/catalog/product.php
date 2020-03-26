@@ -10,7 +10,23 @@
 use shop\helpers\PriceHelper;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
-use yii\helpers\Url; ?>
+use yii\helpers\Url;
+
+$this->title = $product->name;
+
+/* TODO  не выводяться подкатегории в хлебных крошках (евробуклеты) */
+$this->params['breadcrumbs'][] = ['label' => 'Catalog', 'url' => ['index']];
+foreach ($product->category->parents as $parent) {
+    if (!$parent->isRoot()) {
+        $this->params['breadcrumbs'][] = ['label' => $parent->name, 'url' => ['category', 'id' => $parent->id]];
+    }
+}
+$this->params['breadcrumbs'][] = ['label' => $product->category->name, 'url' => ['category', 'id' => $product->category->id]];
+$this->params['breadcrumbs'][] = $product->name;
+$this->params['active_category'] = $product->category;
+
+
+?>
 
 <div class="row" xmlns:fb="http://www.w3.org/1999/xhtml">
     <div class="col-sm-8">

@@ -133,6 +133,7 @@ class CatalogController extends Controller
     }
 
 
+    /*  Здесь выведим просто инфу о товаре с формой загрузки картинок */
     public function actionView($id)
     {
         $product = $this->findModel($id);
