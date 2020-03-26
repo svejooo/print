@@ -11,7 +11,9 @@ use shop\entities\shop\Product\Product;
 use shop\forms\shop\AddToCartForm;
 use shop\forms\shop\Product\PhotosForm;
 use shop\forms\shop\ReviewForm;
+use shop\forms\shop\Search\SearchForm;
 use shop\repositories\NotFoundException;
+use shop\repositories\readModels\ProductReadRepository;
 use shop\services\manage\Shop\ProductManageService;
 use Yii;
 use yii\data\ActiveDataProvider;
@@ -21,24 +23,44 @@ use yii\web\NotFoundHttpException;
 
 class CatalogController extends Controller
 {
-    private $service;
     public $layout = 'catalog';
+
+    private $service;
     private $products;
     private $categories;
     private $brands;
     private $tags;
 
-    public function __construct($id, $module, ProductManageService $service,  $config = [])
+    public function __construct($id, $module, ProductManageService $service, ProductReadRepository $products,  $config = [])
     {
         parent::__construct($id, $module, $config);
         $this->service = $service;
+        $this->products = $products;
     }
+
+    /* ----- ПОИСК ------- */
+    public function actionSearch()
+    {
+        $form = new SearchForm();
+        $form->load( \Yii::$app->request->queryParams );
+        $form->validate();
+
+
+        $dataProvider = $this->products->search($form);
+        return $this->render('search', [
+            'dataProvider' => $dataProvider,
+            'searchForm' => $form,
+        ]);
+    }
+
+
 
     public function actionProduct($id)
     {
         //if (!$product = $this->products->find($id))
         //  throw new \DomainException('Такого продукта нет в системе');
 
+        /* TODO  все выборки для продуктов перенсти в ProductReadRepository  */
         if ( !$product = Product::find()->active()->andWhere(['id' => $id])->one() )
             throw new \DomainException('Такого продукта нет в системе');
 
@@ -167,6 +189,8 @@ class CatalogController extends Controller
             'photosForm' => $photosForm,
         ]);
     }
+
+
 
 
 
