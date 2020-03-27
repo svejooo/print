@@ -30,7 +30,8 @@
         "kartik-v/yii2-widget-fileinput": "dev-master",
         "tzurbaev/osnova-api": "^0.9.1",
         "tecnickcom/tc-lib-barcode": "^1.15",
-        "kartik-v/yii2-mpdf": "dev-master"
+        "kartik-v/yii2-mpdf": "dev-master",
+        "yiisoft/yii2-httpclient": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",
