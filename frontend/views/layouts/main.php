@@ -22,6 +22,7 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -38,6 +39,7 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => 'Главная', 'url' => ['/']],
         ['label' => 'Продукция', 'url' => ['shop/catalog']],
+        ['label' => 'Поиск (sql)', 'url' => ['shop/catalog/search']],
         ['label' => 'Блог', 'url' => ['/blog']],
         ['label' => 'О компании', 'url' => ['site/about']],
         ['label' => 'Контакты', 'url' => ['site/contact']],
@@ -82,6 +84,7 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.min.js"></script>
 </body>
 </html>
 <?php $this->endPage() ?>

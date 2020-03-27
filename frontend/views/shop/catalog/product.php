@@ -5,6 +5,7 @@
 /* @var $product shop\entities\shop\Product\Product */
 /* @var $cartForm shop\forms\shop\AddToCartForm */
 /* @var $reviewForm shop\forms\shop\ReviewForm */
+/* @var $asystem shop\repositories\asystem\Asystem */
 
 
 use shop\helpers\PriceHelper;
@@ -24,10 +25,11 @@ foreach ($product->category->parents as $parent) {
 $this->params['breadcrumbs'][] = ['label' => $product->category->name, 'url' => ['category', 'id' => $product->category->id]];
 $this->params['breadcrumbs'][] = $product->name;
 $this->params['active_category'] = $product->category;
-
-
 ?>
+<script>
 
+    document.cookie = "asystemTpl=<?= $asystem->tpl ?>";
+</script>
 <div class="row" xmlns:fb="http://www.w3.org/1999/xhtml">
     <div class="col-sm-8">
         <ul class="thumbnails">
@@ -55,6 +57,7 @@ $this->params['active_category'] = $product->category;
         <div class="tab-content">
             <div class="tab-pane active" id="tab-description"><p>
                     <?= Yii::$app->formatter->asNtext($product->description) ?>
+                    <?php echo  $asystem->asystemForm; ?>
             </div>
             <div class="tab-pane" id="tab-specification">
                 <table class="table table-bordered">
@@ -146,13 +149,10 @@ $this->params['active_category'] = $product->category;
                 <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">0 Отзывов</a> /
                 <a href="" onclick="$('a[href=\'#tab-review\']').trigger('click'); return false;">Написать отзыв</a></p>
             <hr>
-            <!-- AddThis Button BEGIN -->
-            <div class="addthis_toolbox addthis_default_style" data-url="/index.php?route=product/product&amp;product_id=47"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
-            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script>
-            <!-- AddThis Button END -->
         </div>
     </div>
 </div>
+
 
 <!--
 <script type="text/javascript">
@@ -210,5 +210,4 @@ $this->params['active_category'] = $product->category;
     });
 </script>
 -->
-
 

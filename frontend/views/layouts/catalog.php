@@ -38,6 +38,7 @@ AppAsset::register($this);
     $menuItems = [
         ['label' => 'Главная', 'url' => ['/']],
         ['label' => 'Продукция', 'url' => ['shop/catalog']],
+        ['label' => 'Поиск (sql)', 'url' => ['shop/catalog/search']],
         ['label' => 'Блог', 'url' => ['/blog']],
         ['label' => 'О компании', 'url' => ['site/about']],
         ['label' => 'Контакты', 'url' => ['site/contact']],

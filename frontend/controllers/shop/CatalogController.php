@@ -5,6 +5,7 @@ namespace frontend\controllers\shop;
 use backend\forms\Shop\CategorySearch;
 use backend\forms\Shop\ProductSearch;
 
+use http\Client;
 use shop\entities\Shop\Category;
 use shop\entities\shop\Product\Modification;
 use shop\entities\shop\Product\Product;
@@ -12,6 +13,7 @@ use shop\forms\shop\AddToCartForm;
 use shop\forms\shop\Product\PhotosForm;
 use shop\forms\shop\ReviewForm;
 use shop\forms\shop\Search\SearchForm;
+use shop\repositories\asystem\Asystem;
 use shop\repositories\NotFoundException;
 use shop\repositories\readModels\ProductReadRepository;
 use shop\services\manage\Shop\ProductManageService;
@@ -54,6 +56,23 @@ class CatalogController extends Controller
     }
 
 
+    public function actionApi($template){
+        //$get = \Yii::$app->request->get();
+        //var_dump($get);
+
+        $client = new Client();
+
+        //curl_setopt($ch, 	CURLOPT_URL, "http://91.200.224.132:56088/api/".$template."/");
+//        $ch = curl_init();
+//        curl_setopt($ch, 	CURLOPT_URL, "http://91.200.224.132:56088/api/54046670/");
+//        curl_setopt($ch, 	CURLOPT_POST, 1);
+//        curl_setopt($ch, 	CURLOPT_POSTFIELDS, http_build_query($_POST) );
+//        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+//        echo $server_output = curl_exec($ch);
+//        curl_close ($ch);
+
+    }
+
 
     public function actionProduct($id)
     {
@@ -64,17 +83,28 @@ class CatalogController extends Controller
         if ( !$product = Product::find()->active()->andWhere(['id' => $id])->one() )
             throw new \DomainException('Такого продукта нет в системе');
 
-        $this->layout = 'blank';
+        $this->layout = 'productOnly';
+
 
         $cartForm = new AddToCartForm($product);
         $reviewForm = new ReviewForm();
+
+        $tpl = '54046670';
+        $asystem = new Asystem;
+        if (!$asystem->getForm($tpl))
+            throw new \DomainException('Непришло с ' . $asystem->ip);
+
 
         return $this->render('product', [
             'product' => $product,
             'cartForm' => $cartForm,
             'reviewForm' => $reviewForm,
+            'asystem' => $asystem,
         ]);
     }
+
+
+
 
 
 
