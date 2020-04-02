@@ -49,7 +49,7 @@ use yii\helpers\Url;
         <select id="input-sort" class="form-control" onchange="location = this.value;">
             <option value="/index.php?route=product/category&amp;path=20&amp;sort=p.sort_order&amp;order=ASC" selected="selected">Default</option>
             <option value="/index.php?route=product/category&amp;path=20&amp;sort=pd.name&amp;order=ASC">Name (A - Z)</option>
-            <option value="/index.php?route=product/category&amp;path=20&amp;sort=pd.name&amp;order=DESC">Name (Z - A)</option>
+            <option value="/index.php?route=product/categvory&amp;path=20&amp;sort=pd.name&amp;order=DESC">Name (Z - A)</option>
             <option value="/index.php?route=product/category&amp;path=20&amp;sort=p.price&amp;order=ASC">Price (Low &gt; High)</option>
             <option value="/index.php?route=product/category&amp;path=20&amp;sort=p.price&amp;order=DESC">Price (High &gt; Low)</option>
             <option value="/index.php?route=product/category&amp;path=20&amp;sort=rating&amp;order=DESC">Rating (Highest)</option>
