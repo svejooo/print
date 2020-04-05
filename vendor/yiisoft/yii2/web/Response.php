@@ -62,15 +62,15 @@ use yii\helpers\Url;
 class Response extends \yii\base\Response
 {
     /**
-     * @event ResponseEvent an event that is triggered at the beginning of [[send()]].
+     * @event \yii\base\Event an event that is triggered at the beginning of [[send()]].
      */
     const EVENT_BEFORE_SEND = 'beforeSend';
     /**
-     * @event ResponseEvent an event that is triggered at the end of [[send()]].
+     * @event \yii\base\Event an event that is triggered at the end of [[send()]].
      */
     const EVENT_AFTER_SEND = 'afterSend';
     /**
-     * @event ResponseEvent an event that is triggered right after [[prepare()]] is called in [[send()]].
+     * @event \yii\base\Event an event that is triggered right after [[prepare()]] is called in [[send()]].
      * You may respond to this event to filter the response content before it is sent to the client.
      */
     const EVENT_AFTER_PREPARE = 'afterPrepare';
@@ -870,7 +870,7 @@ class Response extends \yii\base\Response
 
         if ($checkAjax) {
             if ($request->getIsAjax()) {
-                if (in_array($statusCode, [301, 302]) && preg_match('/Trident.*\brv:11\./' /* IE11 */, $request->userAgent)) {
+                if (in_array($statusCode, [301, 302]) && preg_match('/Trident\/|MSIE[ ]/', $request->userAgent)) {
                     $statusCode = 200;
                 }
                 if ($request->getIsPjax()) {
