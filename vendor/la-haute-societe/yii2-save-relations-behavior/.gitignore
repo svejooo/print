@@ -1,8 +1,0 @@
-
-*.lock
-.idea/
-.vscode/
-/vendor/
-/tests/report/
-/phpunit.phar
-/tests/runtime/
