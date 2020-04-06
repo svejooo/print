@@ -1,1 +1,3 @@
-Hello from HOME
+<?php
+echo 'Hello from HOME';
+?>
