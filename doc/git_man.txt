@@ -1,0 +1,74 @@
+git config --global user.name "pm-g-hash"
+git config --global user.email prog@pmg.ru
+
+// Чтобы не вводить каждый раз прароль по https
+git config credential.helper store --global
+данные будут храниться в .git-credentials.
+обнулить настройки git config --unset credential.helper
+
+
+
+Работаеm с удаленным репозиторием (на примре github)
+
+ЛОКАЛЬНО НА ПЕРВОЙ МАШИНЕ (office pmg)
+Чтобы запулить свой код на удаленный репозиторий
+1. Добавляем удаленный репозиторий как origin с этой ссылкой
+git remote add origin https://github.com/pm-g-hash/yii2-demo.git
+2. Тепер push (отправь) все изменения в гитхаб в ветку master
+git push -u origin master
+
+
+
+НА ВТОРОЙ МАШИНЕ (home)
+0. git init
+1. Добавляем удлаенную репу
+git remote add hub  https://github.com/pm-g-hash/yii2-demo.git
+git config credential.helper store --global
+2. Забираем код git pull <remote> <branch>
+git pull hub workBranch (или просто git pull hub)
+3. Делает локальный дубль (хуй знаит нада ли оно)
+git checkout workBranch
+
+4. Работаем локально
+git branch local		- создаем локальную ветку
+git checkout local		- и переключаемся на нее
+
+5.Поработали, закомитили. Далее сливаем в репозиторий
+git checkout workBranch 	- переключаемся на рабочую ветку
+git merge local 			- сливаем изменения в workBranch (локально)
+git branch -av  			- проверяем че каво
+git push 		 			- отправлем в github
+
+- Все должно отработать и на гитхабе изменения появится
+
+
+
+
+Работает на второй машине
+===================================================
+
+1. git fetch -v
+2. git checkout <master>
+3. git pull -- conflict
+4. git checkout <local>
+5. git merge <master>
+
+===================================================
+
+
+
+// Отменить локальные изменения
+git reset --hard HEAD
+
+// Удалить кешь
+git rm --cached path/to/file
+
+//Удалить ветку локально
+git branch -D feature/experiment
+//Удаленную ветку
+git remote remove origin
+
+
+// Удалить ветку с удаленного репозитория
+git push origin --delete <branchName>
+
