@@ -1,7 +1,7 @@
 <?php
 
 
-namespace shop\entities\Shop\queries;
+namespace shop\entities\shop\queries;
 
 
 use paulzi\nestedsets\NestedSetsQueryTrait;

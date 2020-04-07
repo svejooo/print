@@ -7,7 +7,7 @@ namespace shop\entities\shop;
 use paulzi\nestedsets\NestedSetsBehavior;
 use shop\entities\behaviors\MetaBehavior;
 use shop\entities\Meta;
-use shop\entities\Shop\queries\CategoryQuery;
+use shop\entities\shop\queries\CategoryQuery;
 use yii\db\ActiveRecord;
 
 /**

@@ -8,7 +8,7 @@ use backend\forms\Shop\ProductSearch;
 //use http\Client;
 use yii\base\InvalidConfigException;
 use yii\httpclient\Client;
-use shop\entities\Shop\Category;
+use shop\entities\shop\Category;
 use shop\entities\shop\Product\Modification;
 use shop\entities\shop\Product\Product;
 use shop\forms\shop\AddToCartForm;
