@@ -51,7 +51,7 @@ return [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'ssl://smtp.yandex.com',
                 'username' => 'proproshckin@yandex.ru',
-                'password' => 'Gar00501',
+                'password' => 'd9000261326',
                 'port' => '465',
                 //'encryption' => 'SSL', // у яндекса SSL
             ],

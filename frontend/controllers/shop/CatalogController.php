@@ -97,10 +97,10 @@ class CatalogController extends Controller
         $cartForm = new AddToCartForm($product);
         $reviewForm = new ReviewForm();
 
-        $tpl = '54046670';
+        $tpl = '64561848';
         $asystem = new Asystem;
         if (!$asystem->getForm($tpl))
-            throw new \DomainException('Непришло с ' . $asystem->ip);
+            throw new \DomainException('Непришло с ' . $asystem->asystemHost);
 
 
         return $this->render('product', [
