@@ -1,0 +1,15 @@
+Проблемы при загрузке картинок
+=====================================================
+Исправлена ошибка с созданием thumbs
+composer.json добавляем 
+"repositories": [
+        { "type": "vcs", "url": "https://github.com/monter08/PHPThumb" }
+    ]
+composer update masterexploder/phpthumb
+
+
+Вручную 
+vendor/masterexploder/phpthumb/src/PHPThumb/GD.php
+60 str protected $options; заменить на
+protected $options = [];
+=====================================================

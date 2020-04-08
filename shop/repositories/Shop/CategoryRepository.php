@@ -5,7 +5,7 @@ namespace shop\repositories\Shop;
 
 
 //use shop\dispatchers\EventDispatcher;
-use shop\entities\Shop\Category;
+use shop\entities\shop\Category;
 //use shop\repositories\events\EntityPersisted;
 //use shop\repositories\events\EntityRemoved;
 use shop\repositories\NotFoundException;

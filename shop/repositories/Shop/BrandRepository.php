@@ -4,7 +4,7 @@
 namespace shop\repositories\Shop;
 
 
-use shop\entities\Shop\Brand;
+use shop\entities\shop\Brand;
 use shop\repositories\NotFoundException;
 
 class BrandRepository

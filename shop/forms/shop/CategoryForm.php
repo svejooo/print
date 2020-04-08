@@ -2,7 +2,7 @@
 
 namespace shop\forms\shop;
 
-use shop\entities\Shop\Category;
+use shop\entities\shop\Category;
 //use shop\forms\CompositeForm;
 
 use shop\forms\CompositeForm;

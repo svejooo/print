@@ -72,3 +72,10 @@ git remote remove origin
 // Удалить ветку с удаленного репозитория
 git push origin --delete <branchName>
 
+
+
+
+----------------------------------
+git remote show origin
+тут мы получим информацию о том какая ветка будет заливаться на сервер при выполнении команды git push и стягиваться при git pull.
+git push origin master

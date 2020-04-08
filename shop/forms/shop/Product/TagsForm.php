@@ -4,8 +4,8 @@
 namespace shop\forms\shop\Product;
 
 
-use shop\entities\Shop\Product\Product;
-use shop\entities\Shop\Tag;
+use shop\entities\shop\Product\Product;
+use shop\entities\shop\Tag;
 use yii\base\Model;
 use yii\helpers\ArrayHelper;
 

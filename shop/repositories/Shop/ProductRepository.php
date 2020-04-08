@@ -4,7 +4,7 @@
 namespace shop\repositories\Shop;
 
 
-use shop\entities\Shop\Product\Product;
+use shop\entities\shop\Product\Product;
 use shop\repositories\NotFoundException;
 
 class ProductRepository
