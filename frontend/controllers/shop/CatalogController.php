@@ -7,7 +7,7 @@ use backend\forms\Shop\ProductSearch;
 
 //use http\Client;
 use yii\base\InvalidConfigException;
-use yii\httpclient\Client;
+
 use shop\entities\shop\Category;
 use shop\entities\shop\Product\Modification;
 use shop\entities\shop\Product\Product;
@@ -29,6 +29,7 @@ class CatalogController extends Controller
 {
     public $layout = 'catalog';
 
+    public $idProd;
     private $service;
     private $products;
     private $categories;
@@ -58,32 +59,49 @@ class CatalogController extends Controller
     }
 
 
-    public function actionApi($template){
-        //$post = \Yii::$app->request->post();
-        //var_dump($post);
 
-        $client = new Client();
-        try {
-            $response = $client->createRequest()
-                ->setMethod('POST')
-                ->setUrl('http://192.168.6.22:8088/api/'.$template.'/')
-                ->setData(\Yii::$app->request->post())
-                //->setData(http_build_query($_POST))
-                //->setData(['test'=>'555'])
-                ->send();
-        } catch (InvalidConfigException $e) {
-            throw new \DomainException('huy taam');
+    // protected function findModel($id): Product
+    // {
+    //     if (($model = Product::findOne($id)) !== null) {
+    //         return $model;
+    //     }
+    //     throw new NotFoundHttpException('The requested page does not exist.');
+    // }
+
+
+    public function actionApi($id,$template){
+        // $arr = Yii::$app->request->get();
+        // var_dump($arr);
+        // echo $this->idProd;
+        //echo $arr['id'];
+        //echo \Yii::$app->request->get();
+           // echo $id;
+           // exit; 
+
+        $postData = \Yii::$app->request->post();
+        $asystem = new Asystem;
+        $price = (float) $asystem->getPrice($template, $postData);
+        // 
+        if(floatval($price)){
+            try {
+                $this->service->changePriceAJAX($id, $price);
+                echo $price;
+                //return $this->redirect(['view', 'id' => $id]);
+            } catch (\DomainException $e) {
+                Yii::$app->errorHandler->logException($e);
+                Yii::$app->session->setFlash('error', $e->getMessage());
+            }
+
         }
-        echo $response->content;
-        //var_dump($response);
-
-
-
+        else
+            echo '-----';
     }
 
 
     public function actionProduct($id)
-    {
+    {   
+        //Попоробуем устанвить id 
+        $this->idProd = "1";
         //if (!$product = $this->products->find($id))
         //  throw new \DomainException('Такого продукта нет в системе');
 

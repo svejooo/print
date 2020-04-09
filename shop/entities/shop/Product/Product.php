@@ -89,6 +89,10 @@ class Product extends ActiveRecord
 
     }
 
+    public function setPriceNew($new): void
+    {
+        $this->price_new = $new;
+    }
 
     public function setPrice($new, $old): void
     {

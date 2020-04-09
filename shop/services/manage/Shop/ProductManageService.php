@@ -215,6 +215,15 @@ class ProductManageService
     }
 
 
+    public function changePriceAJAX($id, $priceNew): void
+    {
+        // Возвращает как калсс продукт 
+        // shop\entities\shop\Product\Product
+        $product = $this->products->get($id);  
+        $product->setPriceNew($priceNew);
+        $this->products->save($product);
+    }
+
 
     public function changePrice($id, PriceForm $form): void
     {

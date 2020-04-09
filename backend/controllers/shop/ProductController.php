@@ -157,11 +157,14 @@ class ProductController extends Controller
                 Yii::$app->session->setFlash('error', $e->getMessage());
             }
         }
+
         return $this->render('price', [
             'model' => $form,
             'product' => $product,
         ]);
     }
+
+
 
     /**
      * @param integer $id

@@ -1,6 +1,8 @@
 $("#calc_submit_button").on('click', function(){
 
 
+    // /alert( location.search );
+
     var tpl = $.cookie('asystemTpl');
     //alert(tpl);
 
@@ -11,10 +13,10 @@ $("#calc_submit_button").on('click', function(){
     $.ajax({
 
         type: "POST",
-        url: "api?template="+tpl,
+        url: "api" +  location.search + "&template="+tpl,
         data:data,
         error:function(){
-            $("#contentResult").html("<strong>ошибочка вышла</strong>");
+            $("#contentResult").html("<strong>Ошибка AJAX обращения к CatalogController - actionApi </strong>");
             //document.getElementById('truePhone').value = "";
 
         },
